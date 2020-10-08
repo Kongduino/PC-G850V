@@ -95,25 +95,25 @@ There are others, but I haven't used them yet – or some didn't work as adverti
 - **CLS**
 
 ```ASM
-500CLS: LD B, 6 ; 6 lines
+500CLS: LD B, 6
 502 LD DE, 0
-504CLS1: PUSH BC ; B is used both for line and column [DJNZ]. So the line is saved in the stack
-506 LD B, 24 ; 24 chars per line
-508CLS2: LD A, 32 ; ' '
+504CLS1: PUSH BC
+506 LD B, 24
+508CLS2: LD A, 32
 510 PUSH BC
 512 PUSH DE
 514 PUSH HL
-516 CALL PUTCHR ; writes A (ie 32, ie ' ') to the screen at pos E,D
+516 CALL PUTCHR
 518 POP HL
 520 POP DE
 522 POP BC
-510 INC E ; pos X
-512 DJNZ CLS2 ; Very powerful: decrement B and go if non-zero
-514 INC D ; pos Y
-516 LD E, 0
-518 POP BC ; B is used both for line and column [DJNZ]. So the line is saved in the stack
-520 DJNZ CLS1
-522 RET
+524 INC E
+526 DJNZ CLS2
+528 INC D
+530 LD E, 0
+532 POP BC
+534 DJNZ CLS1
+536 RET
 ```
 
 Clears the screen. Haven't found yet the ROM routine that does that...
