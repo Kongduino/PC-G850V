@@ -151,7 +151,7 @@ Clears the screen. Haven't found yet the ROM routine that does that...
 760 RET
 ```
 
-- **DSPSTR**
+- **STRLN**
 
 ```ASM
 210 LD HL, L0 ; beginning of the string
