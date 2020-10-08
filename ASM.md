@@ -107,9 +107,9 @@ There are others, but I haven't used them yet – or some didn't work as adverti
 518 POP HL
 520 POP DE
 522 POP BC
-524 INC E ; pos X
+524 INC E ; Increment pos X
 526 DJNZ CLS2 ; Very powerful: decrement B and go if non-zero
-528 INC D ; pos Y
+528 INC D ; Increment pos Y
 530 LD E, 0
 532 POP BC ; B is used both for line and column [DJNZ]. So the line is saved in the stack
 534 DJNZ CLS1
