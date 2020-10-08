@@ -79,7 +79,7 @@
 
 - **0BCDFH / 0BCE2H / BCE5H**
 
- I haven't named them yet, and the docs aren't that clear, but they read a char from Serial. Te first one wait a short amount of time, the latter 2 indefinitely. I have used the last one with success.
+ I haven't named them yet, and the docs aren't that clear, but they read a char from Serial. The first one waits a short amount of time, the latter 2 indefinitely. I have used the last one with success.
 
 - **WAITK EQU 0BFCDH**
 
