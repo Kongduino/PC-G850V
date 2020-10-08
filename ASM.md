@@ -2,6 +2,8 @@
 
 ## This README documents my ASM code, since memory is limited on the Sharp.
 
+I don't want to overcrowd my code files with comments – space is at a premium on the Sharp... So I am documenting stuff here instead.
+
 - The code uses (un)documented ROM routines. These are named for readability, but it's not exactly scintillating. Known routines are documented below.
 
 - People who come from "modern" language might find some concepts weird (like flag-based comparisons). I'll try to explain these.
