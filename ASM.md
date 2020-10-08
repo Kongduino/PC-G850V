@@ -52,6 +52,7 @@
  INKEY gives you the key according to the key matrix. This gives you the real character. Used to do real user input (as opposed to press a key to continue kind of things).
 
 - **PUTCHR EQU 08440H**
+
  Displays the ASCII(ish) char in A at position ED (E=x, D=y, so reverse order).
 ```ASM
 100 LD A, 058H
