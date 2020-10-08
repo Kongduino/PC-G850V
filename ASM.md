@@ -43,9 +43,9 @@
 270 JP Z, LOOP0
 ```
  Waits for a key to be pressed.
-`CALL INKEY` ==> polls keyboard and puts result in A.
-`CP 0` ==> compares A with 0.
-`JP Z, LOOP0` ==> If flag is Zero (true), go back to LOOP0.
+ - `CALL INKEY` ==> polls keyboard and puts result in A.
+ - `CP 0` ==> compares A with 0.
+ - `JP Z, LOOP0` ==> If flag is Zero (true), go back to LOOP0.
 
 - **GETCHR EQU 0BCFDH (088C1H)**
 
