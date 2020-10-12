@@ -17,27 +17,120 @@
     <input type="text" id="increment" style="width: 50px;" value="10"><br /><br />
     <input type="button" value="go" onclick="renumber()">
   </div>
+  <div style="float: left; padding-left: 20px;padding-top: 50px; height: 600px;">
+  <div style="width: 400px; height: 600px; overflow: scroll;">
+    <code contenteditable="true" id="final" style="height: 600px;">
+    </code>
+  </div>
+  </div>
 
 <script type="text/javascript">
+opcodes={};
+opcodes["ADC"]="ADC";
+opcodes["ADD"]="ADD";
+opcodes["BIT"]="BIT";
+opcodes["CALL"]="CALL";
+opcodes["CCF"]="CCF";
+opcodes["CPD"]="CPD";
+opcodes["CPDR"]="CPDR";
+opcodes["CPI"]="CPI";
+opcodes["CPIR"]="CPIR";
+opcodes["CPL"]="CPL";
+opcodes["DAA"]="DAA";
+opcodes["DEC"]="DEC";
+opcodes["DJNZ"]="DJNZ";
+opcodes["EXX"]="EXX";
+opcodes["HALT"]="HALT";
+opcodes["IN"]="IN";
+opcodes["INC"]="INC";
+opcodes["IND"]="IND";
+opcodes["INDR"]="INDR";
+opcodes["INI"]="INI";
+opcodes["INIR"]="INIR";
+opcodes["JP"]="JP";
+opcodes["JR"]="JR";
+opcodes["LD"]="LD";
+opcodes["LDD"]="LDD";
+opcodes["LDDR"]="LDDR";
+opcodes["LDI"]="LDI";
+opcodes["LDIR"]="LDIR";
+opcodes["NEG"]="NEG";
+opcodes["NOP"]="NOP";
+opcodes["OTDR"]="OTDR";
+opcodes["OTIR"]="OTIR";
+opcodes["OUT"]="OUT";
+opcodes["OUTD"]="OUTD";
+opcodes["OUTI"]="OUTI";
+opcodes["POP"]="POP";
+opcodes["PUSH"]="PUSH";
+opcodes["RES"]="RES";
+opcodes["RET"]="RET";
+opcodes["RETI"]="RETI";
+opcodes["RETN"]="RETN";
+opcodes["RL"]="RL";
+opcodes["RLA"]="RLA";
+opcodes["RLC"]="RLC";
+opcodes["RLCA"]="RLCA";
+opcodes["RLD"]="RLD";
+opcodes["RR"]="RR";
+opcodes["RRA"]="RRA";
+opcodes["RRC"]="RRC";
+opcodes["RRCA"]="RRCA";
+opcodes["RRD"]="RRD";
+opcodes["RST"]="RST";
+opcodes["SBC"]="SBC";
+opcodes["SCF"]="SCF";
+opcodes["SET"]="SET";
+opcodes["SLA"]="SLA";
+opcodes["SLL"]="SLL";
+opcodes["SRA"]="SRA";
+opcodes["SRL"]="SRL";
+
+
 function renumber() {
   var t=document.getElementById('text2renumber');
+  var f=document.getElementById('final');
   var lines=t.value.split('\n');
+  var fixed=[];
   var i, j=lines.length-1; // last line is the stop char
   var lineCount=document.getElementById('startLine').value*1;
   var increment=document.getElementById('increment').value*1;
+  var labels=[];
   for (i=0; i<j; i++) {
     var s=lines[i];
     s=s.replace(/^\d+/,"").trim();
     if(s!="") {
       if(s.search(/^\w+:/)==0) lines[i]=lineCount.toString()+s;
-      if(s.search(/^\*\w+:?/)==0) lines[i]=lineCount.toString()+s;
+      else if(s.search(/^\*\w+:/)==0) lines[i]=lineCount.toString()+s;
       else if(s.search(/^\w+ EQU /)==0) lines[i]=lineCount.toString()+s;
       else lines[i]=lineCount.toString()+" "+s;
-      lineCount+=10;
+      var ss=lines[i].replace(/^(\d+)([A-Z]\w+):/, "$1<span style=\"color: brown\">$2</span>:");
+      ss=lines[i].replace(/^(\d+)([A-Z]\w+) EQU/, "$1<span style=\"color: brown\">$2</span> EQU");
+      ss=ss.replace(/(\d+)/, "<span style=\"color: orange\">$1</span>");
+      ss=ss.replace(/(;.+)/, "<span style=\"color: grey\">$1</span>");
+      ss=ss.replace(/(0[0-9A-F]+H)/, "<span style=\"color: blue\">$1</span>");
+      ss=ss.replace(/('.+')/, "<span style=\"color: purple\">$1</span>");
+      fixed.push(ss)
+      lineCount+=increment;
     }
   }
   t.value=lines.join('\n');
-  t.select();
+  ss=fixed.join('<br />\n');
+  s=t.value;
+  console.log("> ",s);
+  x=s.matchAll(/\d+(\w+)(:| EQU)/g);
+  console.log(x);
+  for (match of x) {
+    labels.push(match[1]);
+    console.log(">",match[1]);
+  }
+  k=labels.length;
+  for (n=0; n<k; n++) {
+    var rx=RegExp("("+labels[n]+")(:|<br)","g");
+    console.log("rx",rx);
+    ss=ss.replace(rx, "<span style='color: brown'>$1</span>\$2");
+  }
+  f.innerHTML=ss;
 }
 document.getElementById('text2renumber').focus();
 </script>
