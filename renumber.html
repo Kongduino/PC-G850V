@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>renumber</title>
+  <meta name="generator" content="BBEdit 13.1" />
+</head>
+<body>
+  <div style="float: left;">
+    <h3><label for="text2renumber">Code to renumber:</label></h3>
+    <textarea id="text2renumber" name="text2renumber" rows="36" cols="60"></textarea><br />
+  </div>
+  <div style="float: left; padding-left: 20px;padding-top: 40px;">
+    <h3><label for="startLine">Start Line:</label></h3>
+    <input type="text" id="startLine" style="width: 50px;" value="10">
+    <h3><label for="increment">Increment:</label></h3>
+    <input type="text" id="increment" style="width: 50px;" value="10"><br /><br />
+    <input type="button" value="go" onclick="renumber()">
+  </div>
+
+<script type="text/javascript">
+function renumber() {
+  var t=document.getElementById('text2renumber');
+  var lines=t.value.split('\n');
+  var i, j=lines.length-1; // last line is the stop char
+  var lineCount=document.getElementById('startLine').value*1;
+  var increment=document.getElementById('increment').value*1;
+  for (i=0; i<j; i++) {
+    var s=lines[i];
+    s=s.replace(/^\d+/,"").trim();
+    if(s!="") {
+      if(s.search(/^\w+:/)==0) lines[i]=lineCount.toString()+s;
+      if(s.search(/^\*\w+:?/)==0) lines[i]=lineCount.toString()+s;
+      else if(s.search(/^\w+ EQU /)==0) lines[i]=lineCount.toString()+s;
+      else lines[i]=lineCount.toString()+" "+s;
+      lineCount+=10;
+    }
+  }
+  t.value=lines.join('\n');
+  t.select();
+}
+document.getElementById('text2renumber').focus();
+</script>
+</body>
+</html>
