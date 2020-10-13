@@ -101,6 +101,7 @@ var opl=opcodes.length;
 
 var EQUs={};
 EQUs["PUTCHR"]="0BE62H";
+EQUs["PUTSTR"]="0BFF1H";
 EQUs["INITSR"]="0871AH";
 EQUs["AOUT"]="0BD09H";
 EQUs["WAITK"]="0BFCDH";
@@ -190,13 +191,17 @@ function renumber() {
     console.log(rx);
     ss=ss.replace(rx, "$1<span style=\"color: "+kc+"\">$2</span>");
   }
-  f.innerHTML=ss;
+  f.innerHTML=ss+"<br /><br /><br />";
 }
 var target=document.querySelector('#text2renumber');
 target.addEventListener('paste', (event) => {
   busy=true;
   console.log("You posted text");
-  var paste = (event.clipboardData || window.clipboardData).getData('text');
+  var paste = (event.clipboardData || window.clipboardData).getData('text').trim()+"\n\n";
+  var lns=paste.split("\n");
+  lns=lns[0].replace(/^(\d+).+/g,"$1");
+  lns=lns*1;
+  if(lns>0) startLine.value=lns;
   for (x in EQUs) {
     if(EQUs.hasOwnProperty(x)) {
       rx=RegExp("\\d+"+x+" EQU "+EQUs[x],"g");
@@ -226,6 +231,7 @@ function cbChanged(x) {
     console.log(rx);
     document.getElementById('text2renumber').value=document.getElementById('text2renumber').value.replace(rx, "");
   }
+  renumber();
 }
 </script>
 </body>
