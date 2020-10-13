@@ -10,12 +10,23 @@
     <h3><label for="text2renumber">Code to renumber:</label></h3>
     <textarea id="text2renumber" name="text2renumber" rows="36" cols="60"></textarea><br />
   </div>
-  <div style="float: left; padding-left: 20px;padding-top: 40px;">
+  <div style="float: left; padding-left: 20px;padding-top: 10px;">
     <h3><label for="startLine">Start Line:</label></h3>
     <input type="text" id="startLine" style="width: 50px;" value="10">
     <h3><label for="increment">Increment:</label></h3>
-    <input type="text" id="increment" style="width: 50px;" value="10"><br /><br />
-    <input type="button" value="go" onclick="renumber()">
+    <input type="text" id="increment" style="width: 50px;" value="10">
+    <h3><label for="labelColor">Labels:</label></h3>
+    <input type="color" id="labelColor" value="#a52a2a" style="width:85%;">
+    <h3><label for="numColor">Numbers:</label></h3>
+    <input type="color" id="numColor" value="#e69500" style="width:85%;">
+    <h3><label for="numColor">Strings:</label></h3>
+    <input type="color" id="strColor" value="#800080" style="width:85%;">
+    <h3><label for="numColor">Comments:</label></h3>
+    <input type="color" id="comColor" value="#808080" style="width:85%;"><br /><br />
+    <h3><label for="kwdColor">Keywords:</label></h3>
+    <input type="color" id="kwdColor" value="#0000ff" style="width:85%;"><br /><br />
+
+    <input type="button" value="go" onclick="renumber()"><br /><br />
   </div>
   <div style="float: left; padding-left: 20px;padding-top: 50px; height: 600px;">
   <div style="width: 400px; height: 600px; overflow: scroll;">
@@ -25,67 +36,67 @@
   </div>
 
 <script type="text/javascript">
-opcodes={};
-opcodes["ADC"]="ADC";
-opcodes["ADD"]="ADD";
-opcodes["BIT"]="BIT";
-opcodes["CALL"]="CALL";
-opcodes["CCF"]="CCF";
-opcodes["CPD"]="CPD";
-opcodes["CPDR"]="CPDR";
-opcodes["CPI"]="CPI";
-opcodes["CPIR"]="CPIR";
-opcodes["CPL"]="CPL";
-opcodes["DAA"]="DAA";
-opcodes["DEC"]="DEC";
-opcodes["DJNZ"]="DJNZ";
-opcodes["EXX"]="EXX";
-opcodes["HALT"]="HALT";
-opcodes["IN"]="IN";
-opcodes["INC"]="INC";
-opcodes["IND"]="IND";
-opcodes["INDR"]="INDR";
-opcodes["INI"]="INI";
-opcodes["INIR"]="INIR";
-opcodes["JP"]="JP";
-opcodes["JR"]="JR";
-opcodes["LD"]="LD";
-opcodes["LDD"]="LDD";
-opcodes["LDDR"]="LDDR";
-opcodes["LDI"]="LDI";
-opcodes["LDIR"]="LDIR";
-opcodes["NEG"]="NEG";
-opcodes["NOP"]="NOP";
-opcodes["OTDR"]="OTDR";
-opcodes["OTIR"]="OTIR";
-opcodes["OUT"]="OUT";
-opcodes["OUTD"]="OUTD";
-opcodes["OUTI"]="OUTI";
-opcodes["POP"]="POP";
-opcodes["PUSH"]="PUSH";
-opcodes["RES"]="RES";
-opcodes["RET"]="RET";
-opcodes["RETI"]="RETI";
-opcodes["RETN"]="RETN";
-opcodes["RL"]="RL";
-opcodes["RLA"]="RLA";
-opcodes["RLC"]="RLC";
-opcodes["RLCA"]="RLCA";
-opcodes["RLD"]="RLD";
-opcodes["RR"]="RR";
-opcodes["RRA"]="RRA";
-opcodes["RRC"]="RRC";
-opcodes["RRCA"]="RRCA";
-opcodes["RRD"]="RRD";
-opcodes["RST"]="RST";
-opcodes["SBC"]="SBC";
-opcodes["SCF"]="SCF";
-opcodes["SET"]="SET";
-opcodes["SLA"]="SLA";
-opcodes["SLL"]="SLL";
-opcodes["SRA"]="SRA";
-opcodes["SRL"]="SRL";
-
+opcodes=[];
+opcodes.push("ADC");
+opcodes.push("ADD");
+opcodes.push("BIT");
+opcodes.push("CALL");
+opcodes.push("CCF");
+opcodes.push("CPD");
+opcodes.push("CPDR");
+opcodes.push("CPI");
+opcodes.push("CPIR");
+opcodes.push("CPL");
+opcodes.push("DAA");
+opcodes.push("DEC");
+opcodes.push("DJNZ");
+opcodes.push("EXX");
+opcodes.push("HALT");
+opcodes.push("IN");
+opcodes.push("INC");
+opcodes.push("IND");
+opcodes.push("INDR");
+opcodes.push("INI");
+opcodes.push("INIR");
+opcodes.push("JP");
+opcodes.push("JR");
+opcodes.push("LD");
+opcodes.push("LDD");
+opcodes.push("LDDR");
+opcodes.push("LDI");
+opcodes.push("LDIR");
+opcodes.push("NEG");
+opcodes.push("NOP");
+opcodes.push("OTDR");
+opcodes.push("OTIR");
+opcodes.push("OUT");
+opcodes.push("OUTD");
+opcodes.push("OUTI");
+opcodes.push("POP");
+opcodes.push("PUSH");
+opcodes.push("RES");
+opcodes.push("RET");
+opcodes.push("RETI");
+opcodes.push("RETN");
+opcodes.push("RL");
+opcodes.push("RLA");
+opcodes.push("RLC");
+opcodes.push("RLCA");
+opcodes.push("RLD");
+opcodes.push("RR");
+opcodes.push("RRA");
+opcodes.push("RRC");
+opcodes.push("RRCA");
+opcodes.push("RRD");
+opcodes.push("RST");
+opcodes.push("SBC");
+opcodes.push("SCF");
+opcodes.push("SET");
+opcodes.push("SLA");
+opcodes.push("SLL");
+opcodes.push("SRA");
+opcodes.push("SRL");
+var opl=opcodes.length;
 
 function renumber() {
   var t=document.getElementById('text2renumber');
@@ -96,6 +107,11 @@ function renumber() {
   var lineCount=document.getElementById('startLine').value*1;
   var increment=document.getElementById('increment').value*1;
   var labels=[];
+  var lc=document.getElementById('labelColor').value;
+  var nc=document.getElementById('numColor').value;
+  var cc=document.getElementById('comColor').value;
+  var sc=document.getElementById('strColor').value;
+  var kc=document.getElementById('kwdColor').value;
   for (i=0; i<j; i++) {
     var s=lines[i];
     s=s.replace(/^\d+/,"").trim();
@@ -104,12 +120,12 @@ function renumber() {
       else if(s.search(/^\*\w+:/)==0) lines[i]=lineCount.toString()+s;
       else if(s.search(/^\w+ EQU /)==0) lines[i]=lineCount.toString()+s;
       else lines[i]=lineCount.toString()+" "+s;
-      var ss=lines[i].replace(/^(\d+)([A-Z]\w+):/, "$1<span style=\"color: brown\">$2</span>:");
-      ss=lines[i].replace(/^(\d+)([A-Z]\w+) EQU/, "$1<span style=\"color: brown\">$2</span> EQU");
-      ss=ss.replace(/(\d+)/, "<span style=\"color: orange\">$1</span>");
-      ss=ss.replace(/(;.+)/, "<span style=\"color: grey\">$1</span>");
-      ss=ss.replace(/(0[0-9A-F]+H)/, "<span style=\"color: blue\">$1</span>");
-      ss=ss.replace(/('.+')/, "<span style=\"color: purple\">$1</span>");
+      var ss=lines[i].replace(/^(\d+)([A-Z]\w+):/, "$1<span style=\"color: "+lc+"\">$2</span>:");
+      ss=lines[i].replace(/^(\d+)([A-Z]\w+) EQU/, "$1<span style=\"color: "+lc+"\">$2</span> EQU");
+      ss=ss.replace(/(\d+)/, "<span style=\"color: "+nc+"\">$1</span>");
+      ss=ss.replace(/(;.+)/, "<span style=\"color: "+cc+"\">$1</span>");
+      ss=ss.replace(/(0[0-9A-F]+H)/, "<span style=\"color: "+nc+"\">$1</span>");
+      ss=ss.replace(/('.+')/, "<span style=\"color: "+sc+"\">$1</span>");
       fixed.push(ss)
       lineCount+=increment;
     }
@@ -128,7 +144,13 @@ function renumber() {
   for (n=0; n<k; n++) {
     var rx=RegExp("("+labels[n]+")(:|<br)","g");
     console.log("rx",rx);
-    ss=ss.replace(rx, "<span style='color: brown'>$1</span>\$2");
+    ss=ss.replace(rx, "<span style='color: "+lc+"'>$1</span>\$2");
+  }
+  for(i=0; i<opl; i++) {
+    s=opcodes[i];
+    rx=RegExp("([^\\w>])([A-Z]\\w+)", "g");
+    console.log(rx);
+    ss=ss.replace(rx, "$1<span style=\"color: "+kc+"\">$2</span>");
   }
   f.innerHTML=ss;
 }
