@@ -225,7 +225,10 @@ function cbChanged(x) {
   var v=cb.value;
   var rp="1"+n+" EQU "+v+"\n";
   if(cb.checked) {
-    document.getElementById('text2renumber').value=rp+document.getElementById('text2renumber').value.replace(v, n);
+    var ss=document.getElementById('text2renumber').value.replace(v, n);
+    var x=ss.search(/\d+(\w+)(:| EQU)/g);
+    ss=ss.substr(0, x-1)+"\n"+rp+ss.substr(x+1);
+    document.getElementById('text2renumber').value=ss;
   } else {
     var rx=RegExp("\\d+"+n+" EQU "+v+"\n", "g");
     console.log(rx);
