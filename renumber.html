@@ -8,7 +8,9 @@
 <body>
   <div style="float: left;">
     <h3><label for="text2renumber">Code to renumber:</label></h3>
-    <textarea id="text2renumber" name="text2renumber" rows="36" cols="60"></textarea><br />
+    <textarea id="text2renumber" name="text2renumber" rows="36" cols="60" ></textarea><br />
+    <div id="EQUs" style="width: 500px;">
+    </div>
   </div>
   <div style="float: left; padding-left: 20px;padding-top: 10px;">
     <h3><label for="startLine">Start Line:</label></h3>
@@ -25,18 +27,17 @@
     <input type="color" id="comColor" value="#808080" style="width:85%;"><br /><br />
     <h3><label for="kwdColor">Keywords:</label></h3>
     <input type="color" id="kwdColor" value="#0000ff" style="width:85%;"><br /><br />
-
     <input type="button" value="go" onclick="renumber()"><br /><br />
   </div>
   <div style="float: left; padding-left: 20px;padding-top: 50px; height: 600px;">
-  <div style="width: 400px; height: 600px; overflow: scroll;">
-    <code contenteditable="true" id="final" style="height: 600px;">
-    </code>
-  </div>
+    <div style="width: 400px; height: 600px; overflow: scroll;">
+      <code contenteditable="true" id="final" style="height: 600px;"></code>
+    </div>
   </div>
 
 <script type="text/javascript">
-opcodes=[];
+var busy=false;
+var opcodes=[];
 opcodes.push("ADC");
 opcodes.push("ADD");
 opcodes.push("BIT");
@@ -98,6 +99,43 @@ opcodes.push("SRA");
 opcodes.push("SRL");
 var opl=opcodes.length;
 
+var EQUs={};
+EQUs["PUTCHR"]="0BE62H";
+EQUs["INITSR"]="0871AH";
+EQUs["AOUT"]="0BD09H";
+EQUs["WAITK"]="0BFCDH";
+EQUs["WSTSR"]="0BFB2H";
+EQUs["ROLLUP"]="084F7H";
+EQUs["OPENSR"]="0BCE8H";
+EQUs["CLOSSR"]="0BCEBH";
+EQUs["LRDSR"]="0BD15H";
+EQUs["RDBSR0"]="0BCDFH";
+EQUs["RDBSR1"]="0BCE2H";
+EQUs["RDBSR2"]="0BCE5H";
+EQUs["ADDCRLF"]="0BCEEH";
+EQUs["GETCHR"]="0BCFDH";
+EQUs["LDPSTR"]="0BD00H";
+EQUs["REGOUT"]="0BD03H";
+EQUs["HLOUT"]="0BD0FH";
+EQUs["PWROFF"]="0BD2DH";
+EQUs["INKEY"]="0BE53H";
+EQUs["INSLN"]="0BE65H";
+EQUs["WRASR"]="0BFAFH";
+EQUs["WPIXELS"]="0BFD0H";
+EQUs["RPTCHR"]="0BFEEH";
+EQUs["PWROFF"]="0C110H";
+
+var s="";
+for (x in EQUs) {
+  if(EQUs.hasOwnProperty(x)) {
+    s=s+"<div style='float: left;'>";
+    s=s+"<input type='checkbox' id='equ"+x+"' name='"+x+"' value='"+EQUs[x]+"' onChange='cbChanged(\"equ"+x+"\")';>";
+    s=s+"<label for='equ"+x+"'> "+x+" = "+EQUs[x]+"</label>&nbsp;";
+    s=s+"</div>";
+  }
+}
+document.getElementById('EQUs').innerHTML=s;
+
 function renumber() {
   var t=document.getElementById('text2renumber');
   var f=document.getElementById('final');
@@ -154,7 +192,41 @@ function renumber() {
   }
   f.innerHTML=ss;
 }
+var target=document.querySelector('#text2renumber');
+target.addEventListener('paste', (event) => {
+  busy=true;
+  console.log("You posted text");
+  var paste = (event.clipboardData || window.clipboardData).getData('text');
+  for (x in EQUs) {
+    if(EQUs.hasOwnProperty(x)) {
+      rx=RegExp("\\d+"+x+" EQU "+EQUs[x],"g");
+      // console.log(rx);
+      if(paste.search(rx)>-1) {
+        document.getElementById('equ'+x).checked=true;
+      } else {
+        document.getElementById('equ'+x).checked=false;
+      }
+    }
+  }
+  busy=false;
+});
 document.getElementById('text2renumber').focus();
+
+function cbChanged(x) {
+  if(busy==true) return;
+  console.log(x, 'cbChanged');
+  var cb=document.getElementById(x);
+  var n = cb.name;
+  var v=cb.value;
+  var rp="1"+n+" EQU "+v+"\n";
+  if(cb.checked) {
+    document.getElementById('text2renumber').value=rp+document.getElementById('text2renumber').value.replace(v, n);
+  } else {
+    var rx=RegExp("\\d+"+n+" EQU "+v+"\n", "g");
+    console.log(rx);
+    document.getElementById('text2renumber').value=document.getElementById('text2renumber').value.replace(rx, "");
+  }
+}
 </script>
 </body>
 </html>
