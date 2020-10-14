@@ -14,9 +14,9 @@
   </div>
   <div style="float: left; padding-left: 20px;padding-top: 10px;">
     <h3><label for="startLine">Start Line:</label></h3>
-    <input type="text" id="startLine" style="width: 50px;" value="10">
+    <input type="text" id="startLine" style="width: 50px;" value="10" onfocus="this.select();">
     <h3><label for="increment">Increment:</label></h3>
-    <input type="text" id="increment" style="width: 50px;" value="10">
+    <input type="text" id="increment" style="width: 50px;" value="10" onfocus="this.select();">
     <h3><label for="labelColor">Labels:</label></h3>
     <input type="color" id="labelColor" value="#a52a2a" style="width:85%;">
     <h3><label for="numColor">Numbers:</label></h3>
@@ -29,13 +29,66 @@
     <input type="color" id="kwdColor" value="#0000ff" style="width:85%;"><br /><br />
     <input type="button" value="go" onclick="renumber()"><br /><br />
   </div>
-  <div style="float: left; padding-left: 20px;padding-top: 50px; height: 600px;">
-    <div style="width: 400px; height: 600px; overflow: scroll;">
-      <code contenteditable="true" id="final" style="height: 600px;"></code>
+  <div style="float: left; padding-left: 20px;padding-top: 50px; height: 90%;">
+    <div style="width: 400px; height: 700px; overflow: scroll;">
+      <code contenteditable="true" id="final" style="height: 700px;"></code>
     </div>
   </div>
+<input type="file" id="files" name="files[]" multiple />
+<output id="list"></output>
+
+<script>
+function handleFileSelect(evt) {
+  var files = evt.target.files; // FileList object
+  // files is a FileList of File objects. List some properties.
+  var output = [];
+  for (var i = 0, f; f = files[i]; i++) {
+    output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+    f.size, ' bytes, last modified: ',
+    f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+    '</li>');
+  }
+  document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+}
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+function readBlob(opt_startByte, opt_stopByte) {
+  var files = document.getElementById('files').files;
+  if (!files.length) {
+    alert('Please select a file!');
+    return;
+  }
+  var file = files[0];
+  var start = parseInt(opt_startByte) || 0;
+  var stop = parseInt(opt_stopByte) || file.size - 1;
+  var reader = new FileReader();
+  // If we use onloadend, we need to check the readyState.
+  reader.onloadend = function(evt) {
+    if (evt.target.readyState == FileReader.DONE) {
+      // DONE == 2
+      var t=evt.target.result.split('');
+      j=t.length;
+      for(i=0; i<j;i++) {
+        s=t[i].charCodeAt(0).toString(16);
+        if(s.length==1) s="0"+s;
+        t[i]=s;
+      }
+      console.log('Read bytes: ', start + 1, ' - ', stop + 1, ' of ', file.size, ' byte file');
+      console.log(t);
+    }
+  };
+  var blob = file.slice(start, stop + 1);
+  reader.readAsBinaryString(blob);
+}
+</script>
 
 <script type="text/javascript">
+if (window.File && window.FileReader && window.FileList && window.Blob) {
+  console.log('The File APIs are supported in this browser.');
+} else {
+  console.log('The File APIs are not fully supported in this browser.');
+}
+
 var busy=false;
 var opcodes=[];
 opcodes.push("ADC");
@@ -101,29 +154,30 @@ var opl=opcodes.length;
 
 var EQUs={};
 EQUs["PUTCHR"]="0BE62H";
-EQUs["PUTSTR"]="0BFF1H";
-EQUs["INITSR"]="0871AH";
-EQUs["AOUT"]="0BD09H";
+EQUs["RPTCHR"]="0BFEEH";
+EQUs["GETCHR"]="0BCFDH";
 EQUs["WAITK"]="0BFCDH";
-EQUs["WSTSR"]="0BFB2H";
+EQUs["INKEY"]="0BE53H";
+EQUs["ADCRLF"]="0BCEEH";
+EQUs["PUTSTR"]="0BFF1H";
+EQUs["INSLN"]="0BE65H";
+EQUs["AOUT"]="0BD09H";
+EQUs["A2HEX"]="0F9BDH";
+EQUs["HLOUT"]="0BD0FH";
+EQUs["REGOUT"]="0BD03H";
 EQUs["ROLLUP"]="084F7H";
+EQUs["INITSR"]="0871AH";
+EQUs["WRASR"]="0BFAFH";
 EQUs["OPENSR"]="0BCE8H";
 EQUs["CLOSSR"]="0BCEBH";
 EQUs["LRDSR"]="0BD15H";
+EQUs["WSTSR"]="0BFB2H";
 EQUs["RDBSR0"]="0BCDFH";
 EQUs["RDBSR1"]="0BCE2H";
 EQUs["RDBSR2"]="0BCE5H";
-EQUs["ADDCRLF"]="0BCEEH";
-EQUs["GETCHR"]="0BCFDH";
 EQUs["LDPSTR"]="0BD00H";
-EQUs["REGOUT"]="0BD03H";
-EQUs["HLOUT"]="0BD0FH";
-EQUs["PWROFF"]="0BD2DH";
-EQUs["INKEY"]="0BE53H";
-EQUs["INSLN"]="0BE65H";
-EQUs["WRASR"]="0BFAFH";
 EQUs["WPIXELS"]="0BFD0H";
-EQUs["RPTCHR"]="0BFEEH";
+EQUs["PWRON"]="0BD2DH";
 EQUs["PWROFF"]="0C110H";
 
 var s="";
@@ -235,6 +289,96 @@ function cbChanged(x) {
     document.getElementById('text2renumber').value=document.getElementById('text2renumber').value.replace(rx, "");
   }
   renumber();
+}
+
+const kduino=[
+  0x00, 0x00, 0x00, 0x00, 0x00, 
+  0x00, 0x00, 0x00, 0x00, 0x00, 
+  0x00, 0x00, 0x00, 0x00, 0x00, 
+  0x00, 0x00, 0x10, 0x00, 0x00, 
+  0x00, 0x00, 0x00, 0x00, 0x00, 
+  0x00, 0x00, 0x00, 0x00, 0x00, 
+  0x01, 0x00, 0x00, 0xc4, 0x00, 
+  0x3f, 0xbf, 0x81, 0xfd, 0xe0, 
+  0x7f, 0xff, 0xc3, 0xff, 0xf8, 
+  0x7f, 0xff, 0xd3, 0xff, 0xf0, 
+  0x30, 0x40, 0x10, 0x00, 0xa0, 
+  0x00, 0x00, 0x10, 0x00, 0x00, 
+  0x00, 0x00, 0x10, 0x00, 0x00, 
+  0x00, 0x00, 0x18, 0x00, 0x00, 
+  0x00, 0x00, 0x00, 0x00, 0x00, 
+  0x00, 0x00, 0x00, 0x00, 0x00, 
+  0x00, 0x00, 0x00, 0x00, 0x00, 
+  0x00, 0x00, 0x3c, 0x00, 0x00, 
+  0x00, 0x01, 0xff, 0x80, 0x00, 
+  0x00, 0x03, 0xff, 0xc0, 0x00, 
+  0x00, 0x0f, 0xff, 0xe0, 0x00, 
+  0x00, 0x1f, 0xff, 0xf0, 0x00, 
+  0x00, 0x1f, 0xff, 0xf8, 0x00, 
+  0x00, 0x3f, 0xff, 0xf8, 0x00, 
+  0x00, 0x3f, 0xff, 0xfc, 0x00, 
+  0x00, 0x3f, 0xff, 0xfc, 0x00, 
+  0x00, 0x7f, 0xff, 0xfc, 0x00, 
+  0x00, 0x7f, 0xff, 0xfc, 0x00, 
+  0x00, 0x7f, 0xff, 0xfc, 0x00, 
+  0x00, 0x7f, 0xff, 0xfc, 0x00, 
+  0x00, 0x7f, 0xff, 0xfc, 0x00, 
+  0x00, 0x3f, 0xff, 0xfc, 0x00, 
+  0x00, 0x00, 0x00, 0x00, 0x00, 
+  0x00, 0xc0, 0x00, 0x06, 0x00, 
+  0x01, 0x00, 0x00, 0x00, 0x80, 
+  0x02, 0x20, 0x00, 0x0c, 0x40, 
+  0x04, 0x7e, 0x00, 0xfe, 0x00, 
+  0x04, 0x7f, 0xe7, 0xfe, 0x20, 
+  0x00, 0xff, 0xef, 0xfe, 0x20, 
+  0x00, 0xff, 0xef, 0xfe, 0x20, 
+  0x04, 0x7f, 0xe7, 0xfe, 0x20, 
+  0x04, 0x73, 0xe7, 0xce, 0x00, 
+  0x02, 0x23, 0xc3, 0x84, 0x40, 
+  0x01, 0x00, 0x00, 0x00, 0x80, 
+  0x00, 0x7f, 0xff, 0xfe, 0x00, 
+  0x00, 0x00, 0x00, 0x00, 0x00, 
+  0x00, 0x3f, 0xff, 0xfc, 0x00, 
+  0x00, 0x7f, 0xff, 0xfc, 0x00, 
+  0x00, 0x78, 0x00, 0x1c, 0x00, 
+  0x00, 0x67, 0xef, 0xe4, 0x00, 
+  0x00, 0x47, 0x6e, 0xc0, 0x00, 
+  0x00, 0x17, 0x6e, 0xd8, 0x00, 
+  0x25, 0x1f, 0xff, 0xf8, 0x20, 
+  0x3f, 0x00, 0x00, 0x00, 0xf8, 
+  0x7f, 0x57, 0x6e, 0xf5, 0xfc, 
+  0x3b, 0x62, 0x64, 0xcc, 0xe0, 
+  0x00, 0x7f, 0xff, 0xfc, 0x00, 
+  0x00, 0x7f, 0xff, 0xfc, 0x00, 
+  0x00, 0x7f, 0xff, 0xfc, 0x00, 
+  0x00, 0x0f, 0xff, 0xf0, 0x00, 
+  0x00, 0x00, 0x00, 0x00, 0x00, 
+  0x00, 0x00, 0x00, 0x00, 0x00, 
+  0x00, 0x00, 0x00, 0x00, 0x00, 
+  0x00, 0x00, 0x00, 0x00, 0x00
+];
+
+var line=20;
+var t=[];
+t.push('10 CLS: PRINT "Oh hai!"')
+for(i=0; i<328; i++) kduino[i]=~kduino[i];
+for(n=0; n<8; n++) {
+  for(i=0; i<5; i++) {
+    var s="";
+    for(bit=7; bit>-1; bit--) {
+      var sum = 0;
+      for(j=0; j<8; j++) {
+        sum+=((kduino[n*40+j*5+i]>>>bit) & 1)<<j;
+      }
+      if(sum<16) s=s+'0';
+      s=s+sum.toString(16).toUpperCase();
+    }
+    t.push(line.toString()+' GCURSOR ('+(104+i*8).toString()+','+(n*8-7).toString()+')');
+    line+=10;
+    t.push(line.toString()+' GPRINT "'+s+'"');
+    line+=10;
+  }
+  document.getElementById('text2renumber').value=t.join("\n")
 }
 </script>
 </body>
