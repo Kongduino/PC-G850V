@@ -1,94 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>renumber</title>
-  <meta name="generator" content="BBEdit 13.1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Renumber</title>
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <style type="text/css">
+  footer {
+    position: fixed; bottom: 0;
+  }
+  textarea.ui-input-text { height: 600px; }
+  </style>
 </head>
 <body>
-  <div style="float: left;">
-    <h3><label for="text2renumber">Code to renumber:</label></h3>
-    <textarea id="text2renumber" name="text2renumber" rows="36" cols="60" ></textarea><br />
-    <div id="EQUs" style="width: 500px;">
+  <div data-role="page" id="pageone">
+    <div data-role="panel" id="myPanel" style="padding: 5px;" data-position="left" data-display="overlay" data-theme="a">
+      <h2>Renumber</h2>
+      <ul data-role="listview">
+        <li><a href="renumber.html">Renumber</a></li>
+        <li><a href="templates.html">Templates</a></li>
+        <li><a href="BMP.html">BMP</a></li>
+      </ul>
     </div>
+
+    <div data-role="header">
+      <a href="#myPanel" data-icon="bars" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext">panel</a>
+      <h1>Renumber</h1>
+    </div>
+
+    <div data-role="main" class="ui-content">
+  <div style="float: left;">
+    <label for="text2renumber">Code to renumber:</label>
+
+    <textarea id="text2renumber" name="text2renumber" rows="40" cols="40" data-role="none"></textarea>
   </div>
-  <div style="float: left; padding-left: 20px;padding-top: 10px;">
-    <h3><label for="startLine">Start Line:</label></h3>
+  <div id="EQUs" style="float: left; padding-left: 5px; padding-top: 20px; width:200px;"></div>
+  <div style="float: left; padding-left: 20px; padding-top: 40px; width: 100px;">
+    <label for="startLine">Start Line:</label>
     <input type="text" id="startLine" style="width: 50px;" value="10" onfocus="this.select();">
-    <h3><label for="increment">Increment:</label></h3>
+    <label for="increment">Increment:</label>
     <input type="text" id="increment" style="width: 50px;" value="10" onfocus="this.select();">
-    <h3><label for="labelColor">Labels:</label></h3>
-    <input type="color" id="labelColor" value="#a52a2a" style="width:85%;">
-    <h3><label for="numColor">Numbers:</label></h3>
-    <input type="color" id="numColor" value="#e69500" style="width:85%;">
-    <h3><label for="numColor">Strings:</label></h3>
-    <input type="color" id="strColor" value="#800080" style="width:85%;">
-    <h3><label for="numColor">Comments:</label></h3>
-    <input type="color" id="comColor" value="#808080" style="width:85%;"><br /><br />
-    <h3><label for="kwdColor">Keywords:</label></h3>
-    <input type="color" id="kwdColor" value="#0000ff" style="width:85%;"><br /><br />
-    <input type="button" value="go" onclick="renumber()"><br /><br />
+    <label for="labelColor">Labels:</label>
+    <input type="color" id="labelColor" value="#a52a2a" style="width:100%;">
+    <label for="numColor">Numbers:</label>
+    <input type="color" id="numColor" value="#e69500" style="width:100%;">
+    <label for="numColor">Strings:</label>
+    <input type="color" id="strColor" value="#800080" style="width:100%;">
+    <label for="numColor">Comments:</label>
+    <input type="color" id="comColor" value="#808080" style="width:100%;">
+    <label for="kwdColor">Keywords:</label>
+    <input type="color" id="kwdColor" value="#0000ff" style="width:100%;">
+    <input type="button" value="go" onclick="renumber()">
   </div>
   <div style="float: left; padding-left: 20px;padding-top: 50px; height: 90%;">
-    <div style="width: 400px; height: 700px; overflow: scroll;">
+    <div style="width: 300px; height: 700px; overflow: scroll;">
       <code contenteditable="true" id="final" style="height: 700px;"></code>
     </div>
   </div>
-<input type="file" id="files" name="files[]" multiple />
-<output id="list"></output>
-
-<script>
-function handleFileSelect(evt) {
-  var files = evt.target.files; // FileList object
-  // files is a FileList of File objects. List some properties.
-  var output = [];
-  for (var i = 0, f; f = files[i]; i++) {
-    output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-    f.size, ' bytes, last modified: ',
-    f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-    '</li>');
-  }
-  document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-}
-document.getElementById('files').addEventListener('change', handleFileSelect, false);
-
-function readBlob(opt_startByte, opt_stopByte) {
-  var files = document.getElementById('files').files;
-  if (!files.length) {
-    alert('Please select a file!');
-    return;
-  }
-  var file = files[0];
-  var start = parseInt(opt_startByte) || 0;
-  var stop = parseInt(opt_stopByte) || file.size - 1;
-  var reader = new FileReader();
-  // If we use onloadend, we need to check the readyState.
-  reader.onloadend = function(evt) {
-    if (evt.target.readyState == FileReader.DONE) {
-      // DONE == 2
-      var t=evt.target.result.split('');
-      j=t.length;
-      for(i=0; i<j;i++) {
-        s=t[i].charCodeAt(0).toString(16);
-        if(s.length==1) s="0"+s;
-        t[i]=s;
-      }
-      console.log('Read bytes: ', start + 1, ' - ', stop + 1, ' of ', file.size, ' byte file');
-      console.log(t);
-    }
-  };
-  var blob = file.slice(start, stop + 1);
-  reader.readAsBinaryString(blob);
-}
-</script>
-
-<script type="text/javascript">
-if (window.File && window.FileReader && window.FileList && window.Blob) {
-  console.log('The File APIs are supported in this browser.');
-} else {
-  console.log('The File APIs are not fully supported in this browser.');
-}
-
+    </div>
+    
+    <div data-role="footer" id="footer">
+      <h1>Kong kong kong duuiiii noooo</h1>
+    </div>
+  </div> 
+  <script>
 var busy=false;
 var opcodes=[];
 opcodes.push("ADC");
@@ -180,17 +158,26 @@ EQUs["WPIXELS"]="0BFD0H";
 EQUs["PWRON"]="0BD2DH";
 EQUs["PWROFF"]="0C110H";
 
-var s="";
+var s="<div style='float: left; height: 600px; overflow: scroll;'><fieldset data-role='controlgroup'>\n  <legend>EQUs</legend>\n";
 for (x in EQUs) {
   if(EQUs.hasOwnProperty(x)) {
-    s=s+"<div style='float: left;'>";
-    s=s+"<input type='checkbox' id='equ"+x+"' name='"+x+"' value='"+EQUs[x]+"' onChange='cbChanged(\"equ"+x+"\")';>";
-    s=s+"<label for='equ"+x+"'> "+x+" = "+EQUs[x]+"</label>&nbsp;";
-    s=s+"</div>";
+    s=s+"  <input type='checkbox' id='equ"+x+"' name='"+x+"' value='"+EQUs[x]+"' onChange='cbChanged(\"equ"+x+"\")';>\n";
+    s=s+"  <label for='equ"+x+"'> "+x+" = "+EQUs[x]+"</label>\n";
   }
 }
+s=s+"</fieldset></div>";
 document.getElementById('EQUs').innerHTML=s;
 
+function placeFooter() {
+  if($(document.body).height() < $(window).height()) {
+    $("#footer").css({position: "absolute", bottom:"0px"});
+  } else {
+	$("#footer").css({position: ""});
+  }
+  $("#footer").css({width: "100%"});
+}
+placeFooter();
+$("textarea#text2renumber").css({'height':'600px'});
 function renumber() {
   var t=document.getElementById('text2renumber');
   var f=document.getElementById('final');
@@ -260,14 +247,14 @@ target.addEventListener('paste', (event) => {
     if(EQUs.hasOwnProperty(x)) {
       rx=RegExp("\\d+"+x+" EQU "+EQUs[x],"g");
       // console.log(rx);
-      if(paste.search(rx)>-1) {
-        document.getElementById('equ'+x).checked=true;
-      } else {
-        document.getElementById('equ'+x).checked=false;
-      }
+      cb=$('#equ'+x);
+      if (paste.search(rx)>-1) cb.attr("checked", true).checkboxradio("refresh");
+      else cb.attr("checked", false).checkboxradio("refresh");
     }
   }
   busy=false;
+  $(window).scrollTop(0);
+  $('#text2renumber').scrollTop(0);
 });
 document.getElementById('text2renumber').focus();
 
@@ -289,96 +276,6 @@ function cbChanged(x) {
     document.getElementById('text2renumber').value=document.getElementById('text2renumber').value.replace(rx, "");
   }
   renumber();
-}
-
-const kduino=[
-  0x00, 0x00, 0x00, 0x00, 0x00, 
-  0x00, 0x00, 0x00, 0x00, 0x00, 
-  0x00, 0x00, 0x00, 0x00, 0x00, 
-  0x00, 0x00, 0x10, 0x00, 0x00, 
-  0x00, 0x00, 0x00, 0x00, 0x00, 
-  0x00, 0x00, 0x00, 0x00, 0x00, 
-  0x01, 0x00, 0x00, 0xc4, 0x00, 
-  0x3f, 0xbf, 0x81, 0xfd, 0xe0, 
-  0x7f, 0xff, 0xc3, 0xff, 0xf8, 
-  0x7f, 0xff, 0xd3, 0xff, 0xf0, 
-  0x30, 0x40, 0x10, 0x00, 0xa0, 
-  0x00, 0x00, 0x10, 0x00, 0x00, 
-  0x00, 0x00, 0x10, 0x00, 0x00, 
-  0x00, 0x00, 0x18, 0x00, 0x00, 
-  0x00, 0x00, 0x00, 0x00, 0x00, 
-  0x00, 0x00, 0x00, 0x00, 0x00, 
-  0x00, 0x00, 0x00, 0x00, 0x00, 
-  0x00, 0x00, 0x3c, 0x00, 0x00, 
-  0x00, 0x01, 0xff, 0x80, 0x00, 
-  0x00, 0x03, 0xff, 0xc0, 0x00, 
-  0x00, 0x0f, 0xff, 0xe0, 0x00, 
-  0x00, 0x1f, 0xff, 0xf0, 0x00, 
-  0x00, 0x1f, 0xff, 0xf8, 0x00, 
-  0x00, 0x3f, 0xff, 0xf8, 0x00, 
-  0x00, 0x3f, 0xff, 0xfc, 0x00, 
-  0x00, 0x3f, 0xff, 0xfc, 0x00, 
-  0x00, 0x7f, 0xff, 0xfc, 0x00, 
-  0x00, 0x7f, 0xff, 0xfc, 0x00, 
-  0x00, 0x7f, 0xff, 0xfc, 0x00, 
-  0x00, 0x7f, 0xff, 0xfc, 0x00, 
-  0x00, 0x7f, 0xff, 0xfc, 0x00, 
-  0x00, 0x3f, 0xff, 0xfc, 0x00, 
-  0x00, 0x00, 0x00, 0x00, 0x00, 
-  0x00, 0xc0, 0x00, 0x06, 0x00, 
-  0x01, 0x00, 0x00, 0x00, 0x80, 
-  0x02, 0x20, 0x00, 0x0c, 0x40, 
-  0x04, 0x7e, 0x00, 0xfe, 0x00, 
-  0x04, 0x7f, 0xe7, 0xfe, 0x20, 
-  0x00, 0xff, 0xef, 0xfe, 0x20, 
-  0x00, 0xff, 0xef, 0xfe, 0x20, 
-  0x04, 0x7f, 0xe7, 0xfe, 0x20, 
-  0x04, 0x73, 0xe7, 0xce, 0x00, 
-  0x02, 0x23, 0xc3, 0x84, 0x40, 
-  0x01, 0x00, 0x00, 0x00, 0x80, 
-  0x00, 0x7f, 0xff, 0xfe, 0x00, 
-  0x00, 0x00, 0x00, 0x00, 0x00, 
-  0x00, 0x3f, 0xff, 0xfc, 0x00, 
-  0x00, 0x7f, 0xff, 0xfc, 0x00, 
-  0x00, 0x78, 0x00, 0x1c, 0x00, 
-  0x00, 0x67, 0xef, 0xe4, 0x00, 
-  0x00, 0x47, 0x6e, 0xc0, 0x00, 
-  0x00, 0x17, 0x6e, 0xd8, 0x00, 
-  0x25, 0x1f, 0xff, 0xf8, 0x20, 
-  0x3f, 0x00, 0x00, 0x00, 0xf8, 
-  0x7f, 0x57, 0x6e, 0xf5, 0xfc, 
-  0x3b, 0x62, 0x64, 0xcc, 0xe0, 
-  0x00, 0x7f, 0xff, 0xfc, 0x00, 
-  0x00, 0x7f, 0xff, 0xfc, 0x00, 
-  0x00, 0x7f, 0xff, 0xfc, 0x00, 
-  0x00, 0x0f, 0xff, 0xf0, 0x00, 
-  0x00, 0x00, 0x00, 0x00, 0x00, 
-  0x00, 0x00, 0x00, 0x00, 0x00, 
-  0x00, 0x00, 0x00, 0x00, 0x00, 
-  0x00, 0x00, 0x00, 0x00, 0x00
-];
-
-var line=20;
-var t=[];
-t.push('10 CLS: PRINT "Oh hai!"')
-for(i=0; i<328; i++) kduino[i]=~kduino[i];
-for(n=0; n<8; n++) {
-  for(i=0; i<5; i++) {
-    var s="";
-    for(bit=7; bit>-1; bit--) {
-      var sum = 0;
-      for(j=0; j<8; j++) {
-        sum+=((kduino[n*40+j*5+i]>>>bit) & 1)<<j;
-      }
-      if(sum<16) s=s+'0';
-      s=s+sum.toString(16).toUpperCase();
-    }
-    t.push(line.toString()+' GCURSOR ('+(104+i*8).toString()+','+(n*8-7).toString()+')');
-    line+=10;
-    t.push(line.toString()+' GPRINT "'+s+'"');
-    line+=10;
-  }
-  document.getElementById('text2renumber').value=t.join("\n")
 }
 </script>
 </body>
