@@ -132,10 +132,11 @@ FB 4D 45 4D 4D 41 50 20 20 42 41 53 00 00 00 00 00 49 06 00 00 00 00 00 00 00 00
 *  |------------------------------|     no idea   |-----|                                            |number|Cn| line        |
    |File name + extension         |               | size|
 
-* filte type indicator: FB = file. FC = RFile
+* filte type indicator: FB = file. FC = Text file?
 
 size: declared size is 0x627. 0x649 = record size, from &HFB to end of File
 
 number = line number in HEX
 Cn: char count
 
+FC Text files don't have line numbers or length markers
