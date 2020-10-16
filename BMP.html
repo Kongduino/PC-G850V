@@ -34,12 +34,13 @@
     <div data-role="main" class="ui-content">
     <input type="file" id="files" name="files[]" multiple />
     <output id="list"></output>
-    <div style="float: left; width: 300px; height: 140px;">
+    <div style="float: left; width: 300px; height: 140px; padding: 10px;">
+      <span id="dimensions"></span><br />
       <canvas id="canvas0" style="width:288px; height: 96px; float: left;"></canvas>
       <label for="fader">Intensity</label>
-      <input type="range" min="0" max="255" value="48" id="fader" onChange="draw(img, document.getElementById('canvas0'), true, ivReq.checked);draw(img, document.getElementById('canvas1'), false);">
+      <input type="range" min="0" max="255" value="48" id="fader" onChange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);draw(img, document.getElementById('canvas1'), false, 800, 600, false);">
       <label for="ivReq">Invert</label>
-      <input id="ivReq" type="checkbox" onchange="draw(img, document.getElementById('canvas0'), true, ivReq.checked);">
+      <input id="ivReq" type="checkbox" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);">
     </div>
     <canvas id="canvas1" width=800px height=600px "style=float: left;"></canvas>
     </div>
@@ -68,11 +69,11 @@ placeFooter();
 var img = new Image();
 img.src = './Kduino.bmp';
 img.onload = function() {
-  draw(this, document.getElementById('canvas0'), true);
-  draw(this, document.getElementById('canvas1'), false);
+  draw(this, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);
+  draw(this, document.getElementById('canvas1'), false, 800, 600, false);
 };
 
-function draw(img, cv, gr, iv=false) {
+function draw(img, cv, gr, mw, mh, iv=false) {
   if(iv) iv=ivReq.checked;
   var ctx0 = cv.getContext('2d');
   img.style.display = 'none';
@@ -83,15 +84,19 @@ function draw(img, cv, gr, iv=false) {
   ctx0.clearRect(0,0,dw,dh);
   console.log("original size:",sw,sh)
   console.log("canvas size:",dw,dh)
-  if(sw>dw||sh>dh) {
-    var r0=sw/dw;
-    var r1=sh/dh;
+  if(sw>mw||sh>mh) {
+    var r0=sw/mw;
+    var r1=sh/mh;
     if(r1>r0)r0=r1;
     sw0=Math.floor(sw/r0);
     sh0=Math.floor(sh/r0);
     ctx0.drawImage(img, 0, 0, sw, sh, 0, 0, sw0, sh0);
-    console.log("resizing to:",sw0,sh0)
-  } else ctx0.drawImage(img, 0, 0);
+    console.log("resizing to:",sw0,sh0);
+    if(gr) dimensions.innerHTML=sw0.toString()+"x"+sh0.toString();
+  } else {
+    ctx0.drawImage(img, 0, 0);
+    if(gr) dimensions.innerHTML=sw.toString()+"x"+sh.toString();
+  }
 
   var invert = function(ct, cv) {
     var imageData = ct.getImageData(0, 0, cv.width, cv.height);
@@ -142,8 +147,8 @@ function handleFileSelect(evt) {
     img = new Image();
     img.src = fr.result;
     img.onload = function() {
-      draw(this, document.getElementById('canvas0'), true);
-      draw(this, document.getElementById('canvas1'), false);
+      draw(this, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);
+      draw(this, document.getElementById('canvas1'), false, 800, 600, false);
     };
   }
   document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
