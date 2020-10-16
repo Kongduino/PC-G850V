@@ -37,7 +37,9 @@
     <div style="float: left; width: 300px; height: 140px;">
       <canvas id="canvas0" style="width:288px; height: 96px; float: left;"></canvas>
       <label for="fader">Intensity</label>
-      <input type="range" min="0" max="255" value="48" id="fader" onChange="draw(img, document.getElementById('canvas0'), true);draw(img, document.getElementById('canvas1'), false);">
+      <input type="range" min="0" max="255" value="48" id="fader" onChange="draw(img, document.getElementById('canvas0'), true, ivReq.checked);draw(img, document.getElementById('canvas1'), false);">
+      <label for="ivReq">Invert</label>
+      <input id="ivReq" type="checkbox" onchange="draw(img, document.getElementById('canvas0'), true, ivReq.checked);">
     </div>
     <canvas id="canvas1" width=800px height=600px "style=float: left;"></canvas>
     </div>
@@ -70,7 +72,8 @@ img.onload = function() {
   draw(this, document.getElementById('canvas1'), false);
 };
 
-function draw(img, cv, gr) {
+function draw(img, cv, gr, iv=false) {
+  if(iv) iv=ivReq.checked;
   var ctx0 = cv.getContext('2d');
   img.style.display = 'none';
   var sw=img.width;
@@ -90,13 +93,15 @@ function draw(img, cv, gr) {
     console.log("resizing to:",sw0,sh0)
   } else ctx0.drawImage(img, 0, 0);
 
-  var invert = function() {
+  var invert = function(ct, cv) {
+    var imageData = ct.getImageData(0, 0, cv.width, cv.height);
+    var data = imageData.data;
     for (var i = 0; i < data.length; i += 4) {
       data[i]     = 255 - data[i];     // red
       data[i + 1] = 255 - data[i + 1]; // green
       data[i + 2] = 255 - data[i + 2]; // blue
     }
-    ctx.putImageData(imageData, 0, 0);
+    ct.putImageData(imageData, 0, 0);
   };
 
   var grayscale = function(ct, cv) {
@@ -114,6 +119,7 @@ function draw(img, cv, gr) {
     ct.putImageData(imageData, 0, 0);
   };
   if(gr) grayscale(ctx0, cv);
+  if(iv) invert(ctx0, cv);
 }
 
 var fr,f;
@@ -129,6 +135,7 @@ function handleFileSelect(evt) {
     f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
     '</li>');
   }
+  $('#ivReq').attr("checked", false).checkboxradio("refresh");
   fr = new FileReader();
   fr.readAsDataURL(files[0]);
   fr.onload = function () {
