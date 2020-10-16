@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Renumber</title>
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <style type="text/css">
+  footer {
+    position: fixed; bottom: 0;
+  }
+  textarea.ui-input-text { height: 600px; }
+  </style>
+</head>
+<body onLoad="placeFooter()">
+  <div data-role="page" id="pageone">
+    <div data-role="panel" id="myPanel" style="padding: 5px;" data-position="left" data-display="overlay" data-theme="a">
+      <h2>BMP Tool</h2>
+      <ul data-role="listview">
+        <li><a href="./renumber.html">Renumber</a></li>
+        <li><a href="./templates.html">Templates</a></li>
+        <li><a href="./BMP.html">BMP</a></li>
+      </ul>
+    </div>
+
+    <div data-role="header">
+      <a href="#myPanel" data-icon="bars" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext">panel</a>
+      <h1>BMP</h1>
+    </div>
+
+    <div data-role="main" class="ui-content">
+    <input type="file" id="files" name="files[]" multiple />
+    <output id="list"></output>
+    <div style="float: left; width: 300px; height: 140px;">
+      <canvas id="canvas0" style="width:288px; height: 96px; float: left;"></canvas>
+      <label for="fader">Intensity</label>
+      <input type="range" min="0" max="255" value="48" id="fader" onChange="draw(img, document.getElementById('canvas0'), true);draw(img, document.getElementById('canvas1'), false);">
+    </div>
+    <canvas id="canvas1" width=800px height=600px "style=float: left;"></canvas>
+    </div>
+
+    <div data-role="footer" id="footer">
+      <h1>Kong kong kong duuiiii noooo</h1>
+    </div>
+  </div>
+<script>
+if (window.File && window.FileReader && window.FileList && window.Blob) {
+  console.log('The File APIs are supported in this browser.');
+} else {
+  console.log('The File APIs are not fully supported in this browser.');
+}
+
+function placeFooter() {
+if($(document.body).height() < $(window).height()) {
+  $("#footer").css({position: "absolute", bottom:"0px"});
+} else {
+	$("#footer").css({position: ""});
+}
+$("#footer").css({width: "100%"});
+}
+placeFooter();
+
+var img = new Image();
+img.src = './Kduino.bmp';
+img.onload = function() {
+  draw(this, document.getElementById('canvas0'), true);
+  draw(this, document.getElementById('canvas1'), false);
+};
+
+function draw(img, cv, gr) {
+  var ctx0 = cv.getContext('2d');
+  img.style.display = 'none';
+  var sw=img.width;
+  var sh=img.height;
+  var dw=cv.width;
+  var dh=cv.height;
+  ctx0.clearRect(0,0,dw,dh);
+  console.log("original size:",sw,sh)
+  console.log("canvas size:",dw,dh)
+  if(sw>dw||sh>dh) {
+    var r0=sw/dw;
+    var r1=sh/dh;
+    if(r1>r0)r0=r1;
+    sw0=Math.floor(sw/r0);
+    sh0=Math.floor(sh/r0);
+    ctx0.drawImage(img, 0, 0, sw, sh, 0, 0, sw0, sh0);
+    console.log("resizing to:",sw0,sh0)
+  } else ctx0.drawImage(img, 0, 0);
+
+  var invert = function() {
+    for (var i = 0; i < data.length; i += 4) {
+      data[i]     = 255 - data[i];     // red
+      data[i + 1] = 255 - data[i + 1]; // green
+      data[i + 2] = 255 - data[i + 2]; // blue
+    }
+    ctx.putImageData(imageData, 0, 0);
+  };
+
+  var grayscale = function(ct, cv) {
+    var threshold=fader.value;
+    var imageData = ct.getImageData(0, 0, cv.width, cv.height);
+    var data = imageData.data;
+    for (var i = 0; i < data.length; i += 4) {
+      var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+      if(avg<threshold) avg=0;
+      else avg=255;
+      data[i]     = avg; // red
+      data[i + 1] = avg; // green
+      data[i + 2] = avg; // blue
+    }
+    ct.putImageData(imageData, 0, 0);
+  };
+  if(gr) grayscale(ctx0, cv);
+}
+
+var fr,f;
+function handleFileSelect(evt) {
+  var files = evt.target.files; // FileList object
+  // files is a FileList of File objects. List some properties.
+  var output = [];
+  for (var i = 0, f; f = files[i]; i++) {
+    console.log(f);
+    fr=f;
+    output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+    f.size, ' bytes, last modified: ',
+    f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+    '</li>');
+  }
+  fr = new FileReader();
+  fr.readAsDataURL(files[0]);
+  fr.onload = function () {
+    img = new Image();
+    img.src = fr.result;
+    img.onload = function() {
+      draw(this, document.getElementById('canvas0'), true);
+      draw(this, document.getElementById('canvas1'), false);
+    };
+  }
+  document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+}
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
+</script>
+</body>
+</html>
