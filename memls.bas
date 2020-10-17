@@ -36,8 +36,8 @@
 460 S$(0)=S$(0)+CHR$(X)
 470 ENDIF
 480 NEXT
-490 PRINT HEX$(FE)+": "+S$(0)+" TYPE "+HEX$(FT)+" Len: "+STR$(N-FE-34)
-500 PRINT #1,HEX$(FE)+": "+S$(0)+" TYPE "+HEX$(FT)+" Len: "+STR$(N-FE-34)
+490 PRINT HEX$(FE)+": "+S$(0)+" ("+HEX$(FT)+") Len: "+STR$(N-FE-34)
+500 PRINT #1,HEX$(FE)+": "+S$(0)+" ("+HEX$(FT)+") Len: "+STR$(N-FE-34)
 510 FE=N
 520 WEND
 
