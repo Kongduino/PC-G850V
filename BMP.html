@@ -44,6 +44,12 @@
     </div>
     <canvas id="canvas1" width=800px height=600px "style=float: left;"></canvas>
     </div>
+  <div style="float: left; padding-left: 20px;padding-top: 50px; height: 90%;">
+    <div style="width: 700px; height: 400px; overflow: scroll;">
+      <code contenteditable="true" id="finalBASIC" style="width: 400px; height: 300px;"></code>
+      <code contenteditable="true" id="finalASM" style="width: 400px; height: 300px;"></code>
+    </div>
+  </div>
 
     <div data-role="footer" id="footer">
       <h1>Kong kong kong duuiiii noooo</h1>
@@ -76,6 +82,8 @@ img.onload = function() {
 function draw(img, cv, gr, mw, mh, iv=false) {
   if(iv) iv=ivReq.checked;
   var ctx0 = cv.getContext('2d');
+  ctx0.fillStyle = 'white';
+  ctx0.fillRect(0, 0, cv.width, cv.height)
   img.style.display = 'none';
   var sw=img.width;
   var sh=img.height;
@@ -122,6 +130,41 @@ function draw(img, cv, gr, mw, mh, iv=false) {
       data[i + 2] = avg; // blue
     }
     ct.putImageData(imageData, 0, 0);
+    var txt=[];
+    txt.push("10 CLS")
+    var ln=11;
+    var txt=[];
+    for (n=0;n<48;n+=8) {
+      for (i=0; i<144; i+=8) {
+        var s=" GCURSOR ("+i.toString()+","+(n+7).toString()+")\n";
+        s+=" GPRINT \"";
+        var sum=0;
+        for(var y=0; y<8;y++) {
+          x=0;
+          for(var j=0; j<8;j++) {
+            if((n+7-j)>sh0|| (i+y)>sw0) x=255;
+            else {
+            var dp=(n+7-j) * (cv.width * 4) + (i+y) * 4;
+            var c=data[dp];
+            x=(x<<1)+(c&1);
+            }
+          }
+          x=255-x;
+          if(x<16) s+="0";
+          s+=x.toString(16);
+          sum+=x;
+        }
+        s+="\"";
+        if(sum>0) {
+          t=s.toUpperCase().split("\n");
+          txt.push(ln.toString()+t[0]);
+          ln+=1;
+          txt.push(ln.toString()+t[1]);
+          ln+=1;
+        }
+      }
+    }
+    finalBASIC.innerHTML=txt.join("<br />\n");
   };
   if(gr) grayscale(ctx0, cv);
   if(iv) invert(ctx0, cv);
