@@ -41,14 +41,12 @@
       <input type="range" min="0" max="255" value="48" id="fader" onChange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);draw(img, document.getElementById('canvas1'), false, 800, 600, false);">
       <label for="ivReq">Invert</label>
       <input id="ivReq" type="checkbox" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);">
+      <code contenteditable="true" id="finalBASIC" style="float: left; width: 400px; height: 300px; overflow: scroll;"></code>
+      <code contenteditable="true" id="finalASM" style="float: left; width: 400px; height: 300px; overflow: scroll;"></code>
     </div>
     <canvas id="canvas1" width=800px height=600px "style=float: left;"></canvas>
     </div>
   <div style="float: left; padding-left: 20px;padding-top: 50px; height: 90%;">
-    <div style="width: 700px; height: 400px; overflow: scroll;">
-      <code contenteditable="true" id="finalBASIC" style="width: 400px; height: 300px;"></code>
-      <code contenteditable="true" id="finalASM" style="width: 400px; height: 300px;"></code>
-    </div>
   </div>
 
     <div data-role="footer" id="footer">
@@ -131,18 +129,20 @@ function draw(img, cv, gr, mw, mh, iv=false) {
     }
     ct.putImageData(imageData, 0, 0);
     var txt=[];
+    var yxy=[];
     txt.push("10 CLS")
     var ln=11;
-    var txt=[];
     for (n=0;n<48;n+=8) {
+      var asm="L"+n.toString()+":";
       for (i=0; i<144; i+=8) {
         var s=" GCURSOR ("+i.toString()+","+(n+7).toString()+")\n";
         s+=" GPRINT \"";
+        asm+=" DB ";
         var sum=0;
         for(var y=0; y<8;y++) {
           x=0;
           for(var j=0; j<8;j++) {
-            if((n+7-j)>sh0|| (i+y)>sw0) x=255;
+            if((n+7-j)>=sh0|| (i+y)>=sw0) x=255;
             else {
             var dp=(n+7-j) * (cv.width * 4) + (i+y) * 4;
             var c=data[dp];
@@ -150,8 +150,13 @@ function draw(img, cv, gr, mw, mh, iv=false) {
             }
           }
           x=255-x;
-          if(x<16) s+="0";
+          if(x<16) {
+            s+="0";
+            asm+="0";
+          }
           s+=x.toString(16);
+          asm+=x.toString(16)+"H";
+          if(y<7) asm+=", ";
           sum+=x;
         }
         s+="\"";
@@ -162,9 +167,11 @@ function draw(img, cv, gr, mw, mh, iv=false) {
           txt.push(ln.toString()+t[1]);
           ln+=1;
         }
+        yxy.push(ln.toString()+asm);
       }
     }
     finalBASIC.innerHTML=txt.join("<br />\n");
+    finalASM.innerHTML=yxy.join("<br />\n");
   };
   if(gr) grayscale(ctx0, cv);
   if(iv) invert(ctx0, cv);
