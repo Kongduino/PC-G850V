@@ -36,17 +36,38 @@
     <output id="list"></output>
     <div style="float: left; width: 300px; height: 140px; padding: 10px;">
       <span id="dimensions"></span><br />
-      <canvas id="canvas0" style="width:288px; height: 96px; float: left;"></canvas>
-      <label for="fader">Intensity</label>
-      <input type="range" min="0" max="255" value="117" id="fader" onChange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);draw(img, document.getElementById('canvas1'), false, 800, 600, false);">
-      <label for="ivReq">Invert</label>
-      <input id="ivReq" type="checkbox" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);">
+      <canvas id="canvas0" style="width:144px; height: 48px; float: left;"></canvas><br /><br />
+      <div id="adjustments" style="display: none;">
+        <label for="fader">Intensity</label>
+        <input type="range" min="0" max="255" value="117" id="fader" onChange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);draw(img, document.getElementById('canvas1'), false, 800, 600, false);">
+
+        <label for="ivReq">Invert</label>
+        <input id="ivReq" type="checkbox" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);">
+
+        <label for="alignLeft">Left</label>
+        <input id="alignLeft" type="radio" name="positionX" value="left" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);" checked>
+
+        <label for="alignMiddle">Center</label>
+        <input id="alignMiddle" type="radio" name="positionX" value="center" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);">
+
+        <label for="alignRight">Right</label>
+        <input id="alignRight" type="radio" name="positionX" value="center" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);"><br />
+
+        <label for="alignTop">Top</label>
+        <input id="alignTop" type="radio" name="positionY" value="center" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);" checked>
+
+        <label for="alignHMiddle">Middle</label>
+        <input id="alignHMiddle" type="radio" name="positionY" value="right" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);">
+
+        <label for="alignBottom">Bottom</label>
+          <input id="alignBottom" type="radio" name="positionY" value="right" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);">
+      </div>
       <div style="float: left; width: 850px; height: 450px; padding: 10px;">
-        <code contenteditable="true" id="finalBASIC" style="float: left; width: 400px; height: 300px; overflow: scroll;"></code>
-        <code contenteditable="true" id="finalASM" style="float: left; width: 400px; height: 300px; overflow: scroll;"></code>
+        <code contenteditable="true" id="finalBASIC" style="float: left; width: 250px; height: 300px; overflow: scroll;"></code>
+        <code contenteditable="true" id="finalASM" style="float: left; width: 300px; height: 300px; overflow: scroll;"></code>
       </div>
     </div>
-    <canvas id="canvas1" width=800px height=600px "style=float: left;"></canvas>
+    <canvas id="canvas1" width=800px height=600px style="float: right;"></canvas>
     </div>
 
     <div data-role="footer" id="footer">
@@ -80,27 +101,34 @@ img.onload = function() {
 function draw(img, cv, gr, mw, mh, iv=false) {
   if(iv) iv=ivReq.checked;
   var ctx0 = cv.getContext('2d');
-  ctx0.fillStyle = 'white';
-  ctx0.fillRect(0, 0, cv.width, cv.height)
   img.style.display = 'none';
   var sw=img.width;
   var sh=img.height;
   var dw=cv.width;
   var dh=cv.height;
-  ctx0.clearRect(0, 0, dw, dh);
-  console.log("original size:", sw, sh)
-  console.log("canvas size:", dw, dh)
+  ctx0.clearRect(0, 0, cv.width, cv.height);
+  ctx0.fillStyle = 'white';
+  ctx0.fillRect(0, 0, 144, 48);
+  console.log("original size:", sw, sh);
+  console.log("canvas size:", dw, dh);
+  var posX=0, posY=0;
   if(sw>mw||sh>mh) {
     var r0=sw/mw;
     var r1=sh/mh;
     if(r1>r0)r0=r1;
     sw0=Math.floor(sw/r0);
     sh0=Math.floor(sh/r0);
-    ctx0.drawImage(img, 0, 0, sw, sh, 0, 0, sw0, sh0);
+    if (alignMiddle.checked) posX=(144-sw0)/2;
+    if (alignRight.checked) posX=(144-sw0);
+    if (alignHMiddle.checked) posY=(48-sh0)/2;
+    if (alignBottom.checked) posY=(148-sh0);
+    ctx0.drawImage(img, 0, 0, sw, sh, posX, 0, sw0, sh0);
     console.log("resizing to:", sw0, sh0);
     if(gr) dimensions.innerHTML=sw0.toString()+"x"+sh0.toString();
   } else {
-    ctx0.drawImage(img, 0, 0);
+    if (alignMiddle.checked) posX=(144-sw0)/2;
+    if (alignRight.checked) posX=(144-sw0);
+    ctx0.drawImage(img, posX, 0);
     if(gr) dimensions.innerHTML=sw.toString()+"x"+sh.toString();
   }
 
@@ -141,12 +169,12 @@ function draw(img, cv, gr, mw, mh, iv=false) {
         for(var y=0; y<8;y++) {
           x=0;
           for(var j=0; j<8;j++) {
-            if((n+7-j)>=sh0|| (i+y)>=sw0) x=255;
-            else {
+            //if((n+7-j)>=sh0|| (i+y)>=sw0) x=255;
+            //else {
               var dp=(n+7-j) * (cv.width * 4) + (i+y) * 4;
               var c=data[dp];
               x=(x<<1)+(c&1);
-            }
+            //}
           }
           x=255-x;
           if(x<16) {
@@ -166,10 +194,8 @@ function draw(img, cv, gr, mw, mh, iv=false) {
           ln+=1;
         }
       }
-      console.log(asm);
       for(i=0; i<18; i++) {
         asm0=asm.substr(i*24, 24).replace(/([0-9A-F][0-9A-F]H)([0-9A-F][0-9A-F]H)([0-9A-F][0-9A-F]H)([0-9A-F][0-9A-F]H)([0-9A-F][0-9A-F]H)([0-9A-F][0-9A-F]H)([0-9A-F][0-9A-F]H)([0-9A-F][0-9A-F]H)/g, " 0$1, 0$2, 0$3, 0$4, 0$5, 0$6, 0$7, 0$8");
-        console.log("> "+asm0);
         var sup="";
         if(i==0) sup="L"+(n/8).toString()+":";
         yxy.push(ln0.toString()+sup+" DB "+asm0);
@@ -221,6 +247,7 @@ function draw(img, cv, gr, mw, mh, iv=false) {
   };
   if(gr) grayscale(ctx0, cv);
   if(iv) invert(ctx0, cv);
+  adjustments.style.display='block';
 }
 
 var fr, f;
