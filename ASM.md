@@ -168,3 +168,15 @@ Clears the screen. Haven't found yet the ROM routine that does that...
 1050 JP STRLN0 ; Loop
 1060STRLN1: RET
 ```
+## Logos
+
+The `raklogo2.asm` demonstrates 2 things:
+
+1. Display of graphics in ASM: FAST!
+2. Creation of said graphics with the [BMP.html](./BMP.html) utility.
+
+It is used in `memls.bas` to display the logo on the right side while displaying system info on the left two-thirds. The code has to assembled before running the BASIC code.
+
+![lslogo](./lslogo.jpg)
+
+If you want to use `memls.bas` without a logo, remove the CALL 256 line.
