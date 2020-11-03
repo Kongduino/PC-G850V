@@ -207,3 +207,4 @@ CLS is probably not THAT exciting (as the BASIC command will probably do the sam
 
 The password utility mentioned above. It uses the CLSX, CLSY variables for positioning.
 
+![BASLIB](BASLIB.png)
