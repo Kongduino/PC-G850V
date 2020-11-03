@@ -197,14 +197,14 @@ Useful functions are put together and running the ASM app will display the impor
 
 - `CLS`/`CLS0`
 
-CLS is probably not THAT exciting (as the BASIC command will probably do the same), but it meshed with `CLS0`, which is parametrable:
+CLS is probably not THAT exciting (as the BASIC command will probably do the same), but it meshes with `CLS0`, which is parametrable:
 
-* What char to use: space for CLS, or maybe another char to fill the screen with something.
-* X, Y: Start position. Useful if you want to do, as I do in LORA.BAS, half-screen erases.
-* Char num: number of repeats; a full CLS is 144, half a screen 72, etc.
+* What char to use: space for CLS, or maybe another char to fill the screen with something. Variable [`CHAR`]
+* X, Y: Start position. Useful if you want to do, as I do in LORA.BAS, half-screen erases. Variables [`CLSX`, `CLSY`]
+* Char num: number of repeats; a full CLS is 144, half a screen 72, etc. Variable [`CLSN`]
 
 - `GETPWD`
 
-The password utility mentioned above. It uses the CLSX, CLSY variables for positioning.
+The password utility mentioned above. It uses the CLSX, CLSY variables for positioning. It displays "pwd: "+password (if any).
 
 ![BASLIB](BASLIB.png)
