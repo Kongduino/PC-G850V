@@ -180,3 +180,30 @@ It is used in `memls.bas` to display the logo on the right side while displaying
 ![lslogo](./lslogo.jpg)
 
 If you want to use `memls.bas` without a logo, remove the CALL 256 line.
+
+## Varia
+
+- **PWD.asm**
+
+This little piece of code enables you to retrieve the password if the Sharp is in protected mode. A simple `CALL 256` will do the trick.
+
+- **BASLIB.asm**
+
+A small ASM library for BASIC (work in progress).
+
+Useful functions are put together and running the ASM app will display the important addresses on the screen. Make a note of that (you know about pen and paper, RIGHT?), and use the addresses (`CALL` for functions, `POKE` to set variables) in your BASIC code.
+
+### functions
+
+- `CLS`/`CLS0`
+
+CLS is probably not THAT exciting (as the BASIC command will probably do the same), but it meshed with `CLS0`, which is parametrable:
+
+* What char to use: space for CLS, or maybe another char to fill the screen with something.
+* X, Y: Start position. Useful if you want to do, as I do in LORA.BAS, half-screen erases.
+* Char num: number of repeats; a full CLS is 144, half a screen 72, etc.
+
+- `GETPWD`
+
+The password utility mentioned above. It uses the CLSX, CLSY variables for positioning.
+
