@@ -99,7 +99,7 @@
 3580 LD A,(HL)
 3590 RET
 
-4000MYLOOP: LD A,1 ; Bit 0: 1st pin (after VSS & GND). 2 cycles
+4000MYLOOP: LD A,1 ; Bit 0: 1st pin (after VSS & GND) is HIGH. 2 cycles
 4010 ; change A's value to match the pin(s) you want to flip
 4020 OUT (62H),A ; HIGH ; 3 cycles
 4030 LD A,0 ; (256 times) 2 cycles
@@ -117,7 +117,7 @@
 4150 DEC A ; 1 cycle
 4160 JP NZ,MLP01 ; 3 cycles
 4170 LD A,0 ; 2 cycles
-4180 OUT (62H),A ; LOW ; 3 cycles
+4180 OUT (62H),A ; all pins are LOW ; 3 cycles
 4190 RET ; 3 cycles
 
 4200LOOP0: DB 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16

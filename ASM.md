@@ -193,6 +193,37 @@ A small ASM library for BASIC (work in progress).
 
 Useful functions are put together and running the ASM app will display the important addresses on the screen. Make a note of that (you know about pen and paper, RIGHT?), and use the addresses (`CALL` for functions, `POKE` to set variables) in your BASIC code.
 
+- **timer.asm**
+
+This little ASM app was requested by [HWR0](https://github.com/hwreverse). Since there are 3 versions of the Sharp PC-G850 (850, 850V, 850VS), we want to see how they compare, speed-wise. Easy peasy: he has an oscilloscope, so we can wiggle the pokekon's butt, aka fiddle with the 11-pin serial port. The idea is to flip a pin on and off on a slow loop, and he'll measure. We have the exact number of cycles the benchmark uses, so that can give us a good idea of the CPU speed.
+
+This code uses 3 ports: 60H to 62H.
+
+![timer_60H_61H_62H.png](timer_60H_61H_62H.png)
+
+60H decides how the 11-pin port is going to function. 61H assigns input/output direction for each of the 8 possible pins (remember this 11-pin port is nc/vcc/gnd + 8 pins, and is multi-function). Finally 62H is the PIO data register, ie an 8-bit parallel port. Send a byte to this port to set all 8 pins.
+
+Between switching the first pin HIGH and LOW, the code loops around, going nowhere in a hurry.
+
+```assembly
+4030 LD A,0 ; 256 times: from 0 to 0
+4040MLP01: PUSH AF
+4050 LD A,0 ; 256 times: from 0 to 0
+4060MLP00: PUSH AF
+4070 LD HL,LOOP0
+4080 LD DE,LOOP1
+4090 LD BC,32
+4100 LDIR ; copy 32 bytes, 1 by 1
+4110 POP AF
+4120 DEC A ; inner loop
+4130 JP NZ,MLP00
+4140 POP AF
+4150 DEC A ; outer loop
+4160 JP NZ,MLP01
+```
+
+This takes about 6.5 to 7 seconds at regular speed, and twice as much when clock speed is halved. A menu after the first run offers the 8 and 4 options. Q to exit, and any other key to keep going.
+
 ### functions
 
 - `CLS`/`CLS0`
