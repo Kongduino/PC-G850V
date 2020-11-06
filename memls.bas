@@ -1,4 +1,4 @@
-10 CALL 256 ; asm raklog2 first!
+10 CALL 256 ' asm raklog2 first!
 20 OPEN "COM1:": PRINT #1, CHR$(10)+CHR$(10)+"LS"
 30 CS=&H0100
 40 CE=PEEK(&H7FFF)*256+PEEK(&H7FFE)-1
