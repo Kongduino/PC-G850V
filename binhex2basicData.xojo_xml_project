@@ -1,0 +1,971 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2020r2" FormatVersion="2" MinIDEVersion="20070100">
+<block type="Project" ID="0">
+ <ProjectSavedInVers>2020.02</ProjectSavedInVers>
+ <IDEVersion>20200200</IDEVersion>
+ <MajorVersion>1</MajorVersion>
+ <MinorVersion>0</MinorVersion>
+ <SubVersion>0</SubVersion>
+ <Release>0</Release>
+ <NonRelease>0</NonRelease>
+ <Region></Region>
+ <ShortVersion></ShortVersion>
+ <LongVersion></LongVersion>
+ <InfoVersion></InfoVersion>
+ <AutoIncVersion>0</AutoIncVersion>
+ <DefaultViewID>1265532927</DefaultViewID>
+ <ProjectType>0</ProjectType>
+ <DefaultLanguage>0</DefaultLanguage>
+ <CurrentLanguage>0</CurrentLanguage>
+ <DefaultEncoding>0</DefaultEncoding>
+ <BuildFlags>18688</BuildFlags>
+ <UseBuildsFolder>1</UseBuildsFolder>
+ <WebApp>0</WebApp>
+ <Icon>
+ </Icon>
+ <MacCreator></MacCreator>
+ <BuildCarbonMachOName>binhex2basic</BuildCarbonMachOName>
+ <BundleIdentifier>com.kongduino.binhex2basic</BundleIdentifier>
+ <WinMDICaption></WinMDICaption>
+ <BuildWinName>binhex2basic.exe</BuildWinName>
+ <BuildWinMDI>0</BuildWinMDI>
+ <BuildWinCompanyName>Kongduino</BuildWinCompanyName>
+ <BuildWinProductName></BuildWinProductName>
+ <BuildWinInternalName></BuildWinInternalName>
+ <BuildWinFileDescription></BuildWinFileDescription>
+ <UseGDIPlus>0</UseGDIPlus>
+ <HiDPI>1</HiDPI>
+ <DarkMode>1</DarkMode>
+ <BuildLinuxX86Name>binhex2basic</BuildLinuxX86Name>
+ <DebuggerCommandLine></DebuggerCommandLine>
+ <LinuxArchitecture>1</LinuxArchitecture>
+ <MacArchitecture>1</MacArchitecture>
+ <OptimizationLevel>0</OptimizationLevel>
+ <CopyWindowsRedist>0</CopyWindowsRedist>
+ <WindowsVersions>{35138b9a-5d96-4fbd-8e2d-a2440225f93a}|{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}|{1f676c76-80e1-4239-95bb-83d0f6d0da78}|{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}</WindowsVersions>
+ <WindowsRunAs>0</WindowsRunAs>
+</block>
+<block type="Module" ID="174379007">
+ <ObjName>App</ObjName>
+ <ObjContainerID>0</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>Application</Superclass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <IsApplicationObject>1</IsApplicationObject>
+ <Compatibility></Compatibility>
+ <PropertyVal Name="MenuBar">1018152959</PropertyVal>
+ <ViewBehavior>
+ </ViewBehavior>
+ <Constant>
+  <ItemName>kFileQuitShortcut</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1972047871</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>0</ItemType>
+  <ItemDef></ItemDef>
+  <ItemFlags>0</ItemFlags>
+  <ConstantInstance>
+   <ItemPlatform>1</ItemPlatform>
+   <ItemLanguage>0</ItemLanguage>
+   <ItemDef>Cmd+Q</ItemDef>
+  </ConstantInstance>
+  <ConstantInstance>
+   <ItemPlatform>5</ItemPlatform>
+   <ItemLanguage>0</ItemLanguage>
+   <ItemDef>Ctrl+Q</ItemDef>
+  </ConstantInstance>
+ </Constant>
+ <Constant>
+  <ItemName>kFileQuit</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>297265151</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>0</ItemType>
+  <ItemDef>&amp;Quit</ItemDef>
+  <ItemFlags>0</ItemFlags>
+  <ConstantInstance>
+   <ItemPlatform>2</ItemPlatform>
+   <ItemLanguage>0</ItemLanguage>
+   <ItemDef>E&amp;xit</ItemDef>
+  </ConstantInstance>
+ </Constant>
+ <Constant>
+  <ItemName>kEditClear</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>191936511</PartID>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemType>0</ItemType>
+  <ItemDef>&amp;Delete</ItemDef>
+  <ItemFlags>0</ItemFlags>
+  <ConstantInstance>
+   <ItemPlatform>2</ItemPlatform>
+   <ItemLanguage>0</ItemLanguage>
+   <ItemDef>&amp;Delete</ItemDef>
+  </ConstantInstance>
+  <ConstantInstance>
+   <ItemPlatform>5</ItemPlatform>
+   <ItemLanguage>0</ItemLanguage>
+   <ItemDef>&amp;Delete</ItemDef>
+  </ConstantInstance>
+ </Constant>
+</block>
+<block type="Window" ID="1265532927">
+ <ObjName>Window1</ObjName>
+ <ObjContainerID>0</ObjContainerID>
+ <IsClass>1</IsClass>
+ <Superclass>Window</Superclass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <HookInstance>
+  <ItemName>Open</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>187013119</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Open()</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+ </HookInstance>
+ <Property>
+  <ItemName>hexType</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2094878719</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>hexType As FileType</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>hexType As FileType</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <Property>
+  <ItemName>bgPic</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>308301823</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>bgPic As Picture</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>bgPic As Picture</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+ </Property>
+ <PropertyVal Name="MenuBarVisible">True</PropertyVal>
+ <PropertyVal Name="MenuBar">1018152959</PropertyVal>
+ <PropertyVal Name="Backdrop">0</PropertyVal>
+ <PropertyVal Name="BackgroundColor">16777215</PropertyVal>
+ <PropertyVal Name="HasBackgroundColor">False</PropertyVal>
+ <PropertyVal Name="Visible">True</PropertyVal>
+ <PropertyVal Name="DefaultLocation">0</PropertyVal>
+ <PropertyVal Name="ImplicitInstance">True</PropertyVal>
+ <PropertyVal Name="FullScreen">False</PropertyVal>
+ <PropertyVal Name="MacProcID">0</PropertyVal>
+ <PropertyVal Name="Composite">False</PropertyVal>
+ <PropertyVal Name="Resizeable">True</PropertyVal>
+ <PropertyVal Name="HasFullScreenButton">False</PropertyVal>
+ <PropertyVal Name="HasMinimizeButton">True</PropertyVal>
+ <PropertyVal Name="HasMaximizeButton">True</PropertyVal>
+ <PropertyVal Name="HasCloseButton">True</PropertyVal>
+ <PropertyVal Name="Title">binhex2basic</PropertyVal>
+ <PropertyVal Name="Type">0</PropertyVal>
+ <PropertyVal Name="MaximumHeight">32000</PropertyVal>
+ <PropertyVal Name="MaximumWidth">32000</PropertyVal>
+ <PropertyVal Name="MinimumHeight">64</PropertyVal>
+ <PropertyVal Name="MinimumWidth">64</PropertyVal>
+ <PropertyVal Name="Height">400</PropertyVal>
+ <PropertyVal Name="Width">600</PropertyVal>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Interfaces</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Width</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Size</PropertyGroup>
+   <PropertyValue>600</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Height</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Size</PropertyGroup>
+   <PropertyValue>400</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MinimumWidth</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Size</PropertyGroup>
+   <PropertyValue>64</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MinimumHeight</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Size</PropertyGroup>
+   <PropertyValue>64</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MaximumWidth</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Size</PropertyGroup>
+   <PropertyValue>32000</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MaximumHeight</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Size</PropertyGroup>
+   <PropertyValue>32000</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Type</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Frame</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Types</ItemType>
+   <EditorType>Enum</EditorType>
+   <Enumeration>
+    <ItemDef>0 - Document</ItemDef>
+    <ItemDef>1 - Movable Modal</ItemDef>
+    <ItemDef>2 - Modal Dialog</ItemDef>
+    <ItemDef>3 - Floating Window</ItemDef>
+    <ItemDef>4 - Plain Box</ItemDef>
+    <ItemDef>5 - Shadowed Box</ItemDef>
+    <ItemDef>6 - Rounded Window</ItemDef>
+    <ItemDef>7 - Global Floating Window</ItemDef>
+    <ItemDef>8 - Sheet Window</ItemDef>
+    <ItemDef>9 - Metal Window</ItemDef>
+    <ItemDef>11 - Modeless Dialog</ItemDef>
+   </Enumeration>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Title</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Frame</PropertyGroup>
+   <PropertyValue>Untitled</PropertyValue>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>HasCloseButton</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Frame</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>HasMaximizeButton</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Frame</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>HasMinimizeButton</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Frame</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>HasFullScreenButton</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Frame</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Resizeable</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Frame</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Composite</ObjName>
+   <PropertyGroup>OS X (Carbon)</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MacProcID</ObjName>
+   <PropertyGroup>OS X (Carbon)</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>FullScreen</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ImplicitInstance</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DefaultLocation</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Locations</ItemType>
+   <EditorType>Enum</EditorType>
+   <Enumeration>
+    <ItemDef>0 - Default</ItemDef>
+    <ItemDef>1 - Parent Window</ItemDef>
+    <ItemDef>2 - Main Screen</ItemDef>
+    <ItemDef>3 - Parent Window Screen</ItemDef>
+    <ItemDef>4 - Stagger</ItemDef>
+   </Enumeration>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Visible</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>HasBackgroundColor</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Background</PropertyGroup>
+   <PropertyValue>False</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>BackgroundColor</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Background</PropertyGroup>
+   <PropertyValue>&amp;hFFFFFF</PropertyValue>
+   <ItemType>Color</ItemType>
+   <EditorType>Color</EditorType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Backdrop</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Background</PropertyGroup>
+   <ItemType>Picture</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MenuBar</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Menus</PropertyGroup>
+   <ItemType>MenuBar</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>MenuBarVisible</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Deprecated</PropertyGroup>
+   <PropertyValue>True</PropertyValue>
+   <ItemType>Boolean</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>bgPic</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Picture</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+ <ControlBehavior>
+  <Superclass>Placard</Superclass>
+  <HookInstance>
+   <ItemName>Open</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <PartID>1508360191</PartID>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Sub Open()</SourceLine>
+    <SourceLine>hexType=New FileType</SourceLine>
+    <SourceLine>hexType.Name = "text/binhex"</SourceLine>
+    <SourceLine>hexType.Extensions = "hex"</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>me.AcceptFileDrop(hexType)</SourceLine>
+    <SourceLine>End Sub</SourceLine>
+   </ItemSource>
+  </HookInstance>
+  <HookInstance>
+   <ItemName>DragEnter</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <PartID>1775382527</PartID>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Function DragEnter(obj As DragItem, action As Integer) As Boolean</SourceLine>
+    <SourceLine>Dim tis As TextInputStream</SourceLine>
+    <SourceLine>Dim s As String</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>tis=tis.Open(obj.FolderItem)</SourceLine>
+    <SourceLine>If tis=Nil Then Return True</SourceLine>
+    <SourceLine>s=tis.ReadAll()</SourceLine>
+    <SourceLine>tis=Nil</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>bgPic=New Picture(124,124,24)</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>bgPic.Graphics.DrawingColor=&amp;cffffff</SourceLine>
+    <SourceLine>bgPic.Graphics.FillRectangle(0,0,124,124)</SourceLine>
+    <SourceLine>If s.Left(3)=":10" Then</SourceLine>
+    <SourceLine>bgPic.Graphics.DrawingColor=&amp;c3333ff</SourceLine>
+    <SourceLine>Else</SourceLine>
+    <SourceLine>bgPic.Graphics.DrawingColor=&amp;cff3333</SourceLine>
+    <SourceLine>End If</SourceLine>
+    <SourceLine>bgPic.Graphics.FontName="Monaco"</SourceLine>
+    <SourceLine>bgPic.Graphics.FontSize=10</SourceLine>
+    <SourceLine>bgPic.Graphics.DrawText(s,2,10)</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>Canvas1.Backdrop=bgPic</SourceLine>
+    <SourceLine>Canvas1.Refresh()</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>Return True</SourceLine>
+    <SourceLine>End Function</SourceLine>
+   </ItemSource>
+  </HookInstance>
+  <HookInstance>
+   <ItemName>DragExit</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <PartID>216209407</PartID>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Sub DragExit(obj As DragItem, action As Integer)</SourceLine>
+    <SourceLine>Canvas1.Backdrop=Nil</SourceLine>
+    <SourceLine>Canvas1.Refresh()</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>End Sub</SourceLine>
+   </ItemSource>
+  </HookInstance>
+  <HookInstance>
+   <ItemName>DropObject</ItemName>
+   <Compatibility></Compatibility>
+   <Visible>1</Visible>
+   <PartID>991617023</PartID>
+   <ItemSource>
+    <TextEncoding>134217984</TextEncoding>
+    <SourceLine>Sub DropObject(obj As DragItem, action As Integer)</SourceLine>
+    <SourceLine>If obj.FolderItem.Name.Right(4)&lt;&gt;".hex" Then Return</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>Dim tis As TextInputStream</SourceLine>
+    <SourceLine>Dim s As String</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>tis=tis.Open(obj.FolderItem)</SourceLine>
+    <SourceLine>If tis=Nil Then Return</SourceLine>
+    <SourceLine>s=tis.ReadAll()</SourceLine>
+    <SourceLine>tis=Nil</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>If s.Left(3)&lt;&gt;":10" Then Return</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>Dim i, j, ln, addr, LineNum, x, y, z, fNum As Integer</SourceLine>
+    <SourceLine>Dim t(), bytes, digits, fName As String</SourceLine>
+    <SourceLine>Dim r As New RegEx</SourceLine>
+    <SourceLine>Dim rm As RegExMatch</SourceLine>
+    <SourceLine>Dim tos As TextOutputStream</SourceLine>
+    <SourceLine>Dim f,g As FolderItem</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>fNum=0</SourceLine>
+    <SourceLine>fName=obj.FolderItem.Name</SourceLine>
+    <SourceLine>g=New FolderItem(obj.FolderItem.Parent.Child(fName+"_Files"))</SourceLine>
+    <SourceLine>If g.Exists Then</SourceLine>
+    <SourceLine>For Each file As FolderItem In g.Children</SourceLine>
+    <SourceLine>file.Remove()</SourceLine>
+    <SourceLine>Next</SourceLine>
+    <SourceLine>Else</SourceLine>
+    <SourceLine>g.CreateFolder()</SourceLine>
+    <SourceLine>End If</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>f=New FolderItem(g.Child(fName+"_"+Str(fNum)+".bas"))</SourceLine>
+    <SourceLine>tos=tos.Create(f)</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>r.SearchPattern=":([0-9A-F][0-9A-F])([0-9A-F][0-9A-F][0-9A-F][0-9A-F])00([0-9A-F]+)"</SourceLine>
+    <SourceLine>lbSource.RemoveAllRows()</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>t=s.SplitBytes(EndOfLine)</SourceLine>
+    <SourceLine>j=t.Ubound-1</SourceLine>
+    <SourceLine>LineNum=10</SourceLine>
+    <SourceLine>s=t(i)</SourceLine>
+    <SourceLine>rm=r.Search(s)</SourceLine>
+    <SourceLine>If rm=Nil Then</SourceLine>
+    <SourceLine>tos.Write(Chr(26))</SourceLine>
+    <SourceLine>tos=Nil</SourceLine>
+    <SourceLine>lbSource.AddRow "The End"</SourceLine>
+    <SourceLine>Return</SourceLine>
+    <SourceLine>End If</SourceLine>
+    <SourceLine>ln=Val("&amp;H"+rm.SubExpressionString(1))</SourceLine>
+    <SourceLine>'lbSource.AddRow Str(ln)</SourceLine>
+    <SourceLine>addr=Val("&amp;H"+rm.SubExpressionString(2))</SourceLine>
+    <SourceLine>s=Str(LineNum)+" AD=&amp;H"+rm.SubExpressionString(2)</SourceLine>
+    <SourceLine>lbSource.AddRow s</SourceLine>
+    <SourceLine>tos.WriteLine s</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>s=""</SourceLine>
+    <SourceLine>z=0</SourceLine>
+    <SourceLine>For i=0 To j</SourceLine>
+    <SourceLine>s=t(i)</SourceLine>
+    <SourceLine>rm=r.Search(s)</SourceLine>
+    <SourceLine>If rm=Nil Then</SourceLine>
+    <SourceLine>tos.Write(Chr(26))</SourceLine>
+    <SourceLine>tos=Nil</SourceLine>
+    <SourceLine>lbSource.AddRow "The End"</SourceLine>
+    <SourceLine>Return</SourceLine>
+    <SourceLine>End If</SourceLine>
+    <SourceLine>ln=Val("&amp;H"+rm.SubExpressionString(1))</SourceLine>
+    <SourceLine>'lbSource.AddRow Str(addr)</SourceLine>
+    <SourceLine>bytes=rm.SubExpressionString(3)</SourceLine>
+    <SourceLine>lbSource.AddRow bytes</SourceLine>
+    <SourceLine>For x=1 to ln Step 8</SourceLine>
+    <SourceLine>If z&gt;800 Then</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" C=0: OA=AD"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" RESTORE"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" FOR X=1 TO "+Str(Z)</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" READ B"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" POKE (AD),B"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" AD=AD+1"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" C=C+1"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" NEXT"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" PRINT ""Wrote ""+STR$(C)+"" bytes"""</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" PRINT ""From 0x""+RIGHT$(""000""+HEX$(OA),4)+"" to 0x""+RIGHT$(""000""+HEX$(AD-1),4)"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" PRINT ""File: "+f.Name+""""</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" END"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.Write(ChrB(26))</SourceLine>
+    <SourceLine>tos=Nil</SourceLine>
+    <SourceLine>fNum=fNum+1</SourceLine>
+    <SourceLine>f=New FolderItem(g.Child(fName+"_"+Str(fNum)+".bas"))</SourceLine>
+    <SourceLine>tos=tos.Create(f)</SourceLine>
+    <SourceLine>LineNum=1</SourceLine>
+    <SourceLine>addr=addr+z</SourceLine>
+    <SourceLine>z=0</SourceLine>
+    <SourceLine>s=Str(LineNum)+" AD=&amp;H"+Hex(addr)</SourceLine>
+    <SourceLine>lbSource.AddRow s</SourceLine>
+    <SourceLine>tos.WriteLine s</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>s=""</SourceLine>
+    <SourceLine>End If</SourceLine>
+    <SourceLine>digits = Mid(bytes, (x-1)*2+1,2).Trim()</SourceLine>
+    <SourceLine>If digits&lt;&gt;"" Then</SourceLine>
+    <SourceLine>s=Str(LineNum)+" DATA &amp;H"+digits</SourceLine>
+    <SourceLine>z=z+1</SourceLine>
+    <SourceLine>For y=1 To 7</SourceLine>
+    <SourceLine>digits = Mid(bytes, (x+y-1)*2+1,2).Trim()</SourceLine>
+    <SourceLine>If digits&lt;&gt;"" Then</SourceLine>
+    <SourceLine>s=s+",&amp;H"+digits</SourceLine>
+    <SourceLine>z=z+1</SourceLine>
+    <SourceLine>Else</SourceLine>
+    <SourceLine>y=8</SourceLine>
+    <SourceLine>End If</SourceLine>
+    <SourceLine>Next</SourceLine>
+    <SourceLine>End If</SourceLine>
+    <SourceLine>lbSource.AddRow s</SourceLine>
+    <SourceLine>tos.WriteLine s</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>Next</SourceLine>
+    <SourceLine>Next</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" Z="+Str(z)</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" C=0"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" RESTORE"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" FOR X=0 TO "+Str(ln-1)</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" READ B"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" POKE (AD),B"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" AD=AD+1"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" C=C+1"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" NEXT"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" PRINT ""Wrote ""+STR$(C)+"" bytes"""</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" PRINT ""From 0x""+RIGHT$(""000""+HEX$(OA),4)+"" to 0x""+RIGHT$(""000""+HEX$(AD-1),4)"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" PRINT ""File: "+f.Name+""""</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos.WriteLine Str(LineNum)+" END"</SourceLine>
+    <SourceLine>LineNum=LineNum+1</SourceLine>
+    <SourceLine>tos=Nil</SourceLine>
+    <SourceLine></SourceLine>
+    <SourceLine>End Sub</SourceLine>
+   </ItemSource>
+  </HookInstance>
+ </ControlBehavior>
+ <ControlBehavior>
+  <Superclass>Canvas</Superclass>
+ </ControlBehavior>
+ <ControlBehavior>
+  <Superclass>Listbox</Superclass>
+ </ControlBehavior>
+ <Control>
+  <ControlClass>Placard</ControlClass>
+  <ItemName>Placard</ItemName>
+  <PropertyVal Name="Value">False</PropertyVal>
+  <PropertyVal Name="Enabled">True</PropertyVal>
+  <PropertyVal Name="Tooltip"></PropertyVal>
+  <PropertyVal Name="Visible">True</PropertyVal>
+  <PropertyVal Name="InitialParent"></PropertyVal>
+  <PropertyVal Name="TabStop">True</PropertyVal>
+  <PropertyVal Name="TabIndex">0</PropertyVal>
+  <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+  <PropertyVal Name="LockBottom">False</PropertyVal>
+  <PropertyVal Name="LockRight">False</PropertyVal>
+  <PropertyVal Name="LockTop">True</PropertyVal>
+  <PropertyVal Name="LockLeft">True</PropertyVal>
+  <PropertyVal Name="Height">128</PropertyVal>
+  <PropertyVal Name="Width">128</PropertyVal>
+  <PropertyVal Name="Top">20</PropertyVal>
+  <PropertyVal Name="Left">20</PropertyVal>
+  <PropertyVal Name="Scope">0</PropertyVal>
+  <PropertyVal Name="Super">Placard</PropertyVal>
+  <PropertyVal Name="Index">-2147483648</PropertyVal>
+  <PropertyVal Name="Name">Placard1</PropertyVal>
+  <PropertyVal Name="Transparent">False</PropertyVal>
+  <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+  <ControlIndex>0</ControlIndex>
+  <Locked>0</Locked>
+  <PartID>849407999</PartID>
+ </Control>
+ <Control>
+  <ControlClass>Canvas</ControlClass>
+  <ItemName>Canvas</ItemName>
+  <PropertyVal Name="InitialParent">Placard1</PropertyVal>
+  <PropertyVal Name="Transparent">True</PropertyVal>
+  <PropertyVal Name="DoubleBuffer">False</PropertyVal>
+  <PropertyVal Name="AllowTabs">False</PropertyVal>
+  <PropertyVal Name="AllowFocus">False</PropertyVal>
+  <PropertyVal Name="Visible">True</PropertyVal>
+  <PropertyVal Name="AllowFocusRing">True</PropertyVal>
+  <PropertyVal Name="Tooltip"></PropertyVal>
+  <PropertyVal Name="Enabled">True</PropertyVal>
+  <PropertyVal Name="Backdrop">0</PropertyVal>
+  <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+  <PropertyVal Name="TabStop">True</PropertyVal>
+  <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+  <PropertyVal Name="TabIndex">0</PropertyVal>
+  <PropertyVal Name="LockBottom">False</PropertyVal>
+  <PropertyVal Name="LockRight">False</PropertyVal>
+  <PropertyVal Name="LockTop">True</PropertyVal>
+  <PropertyVal Name="LockLeft">True</PropertyVal>
+  <PropertyVal Name="Height">120</PropertyVal>
+  <PropertyVal Name="Width">120</PropertyVal>
+  <PropertyVal Name="Top">24</PropertyVal>
+  <PropertyVal Name="Left">24</PropertyVal>
+  <PropertyVal Name="Scope">0</PropertyVal>
+  <PropertyVal Name="Super">Canvas</PropertyVal>
+  <PropertyVal Name="Index">-2147483648</PropertyVal>
+  <PropertyVal Name="Name">Canvas1</PropertyVal>
+  <ControlIndex>1</ControlIndex>
+  <Locked>0</Locked>
+  <PartID>1524748287</PartID>
+ </Control>
+ <Control>
+  <ControlClass>Listbox</ControlClass>
+  <ItemName>Listbox</ItemName>
+  <PropertyVal Name="InitialParent"></PropertyVal>
+  <PropertyVal Name="DataField"></PropertyVal>
+  <PropertyVal Name="DataSource"></PropertyVal>
+  <PropertyVal Name="RowSelectionType">0</PropertyVal>
+  <PropertyVal Name="RequiresSelection">False</PropertyVal>
+  <PropertyVal Name="AllowExpandableRows">False</PropertyVal>
+  <PropertyVal Name="AllowRowReordering">False</PropertyVal>
+  <PropertyVal Name="AllowRowDragging">False</PropertyVal>
+  <PropertyVal Name="AllowResizableColumns">False</PropertyVal>
+  <PropertyVal Name="AllowAutoHideScrollbars">True</PropertyVal>
+  <PropertyVal Name="Underline">False</PropertyVal>
+  <PropertyVal Name="FontUnit">0</PropertyVal>
+  <PropertyVal Name="FontSize">0.0e+</PropertyVal>
+  <PropertyVal Name="FontName">System</PropertyVal>
+  <PropertyVal Name="Italic">False</PropertyVal>
+  <PropertyVal Name="Bold">False</PropertyVal>
+  <PropertyVal Name="Visible">True</PropertyVal>
+  <PropertyVal Name="AllowFocusRing">True</PropertyVal>
+  <PropertyVal Name="Transparent">False</PropertyVal>
+  <PropertyVal Name="DropIndicatorVisible">False</PropertyVal>
+  <PropertyVal Name="HasVerticalScrollbar">True</PropertyVal>
+  <PropertyVal Name="HasHorizontalScrollbar">False</PropertyVal>
+  <PropertyVal Name="InitialValue"></PropertyVal>
+  <PropertyVal Name="Tooltip"></PropertyVal>
+  <PropertyVal Name="HeadingIndex">-1</PropertyVal>
+  <PropertyVal Name="HasHeader">False</PropertyVal>
+  <PropertyVal Name="GridLinesVerticalStyle">0</PropertyVal>
+  <PropertyVal Name="GridLinesHorizontalStyle">0</PropertyVal>
+  <PropertyVal Name="Enabled">True</PropertyVal>
+  <PropertyVal Name="DefaultRowHeight">-1</PropertyVal>
+  <PropertyVal Name="ColumnWidths"></PropertyVal>
+  <PropertyVal Name="ColumnCount">1</PropertyVal>
+  <PropertyVal Name="HasBorder">True</PropertyVal>
+  <PropertyVal Name="AllowAutoDeactivate">True</PropertyVal>
+  <PropertyVal Name="_ScrollWidth">-1</PropertyVal>
+  <PropertyVal Name="_ScrollOffset">0</PropertyVal>
+  <PropertyVal Name="TabStop">True</PropertyVal>
+  <PropertyVal Name="TabPanelIndex">0</PropertyVal>
+  <PropertyVal Name="TabIndex">1</PropertyVal>
+  <PropertyVal Name="LockBottom">True</PropertyVal>
+  <PropertyVal Name="LockRight">True</PropertyVal>
+  <PropertyVal Name="LockTop">True</PropertyVal>
+  <PropertyVal Name="LockLeft">True</PropertyVal>
+  <PropertyVal Name="Height">360</PropertyVal>
+  <PropertyVal Name="Width">420</PropertyVal>
+  <PropertyVal Name="Top">20</PropertyVal>
+  <PropertyVal Name="Left">160</PropertyVal>
+  <PropertyVal Name="Scope">0</PropertyVal>
+  <PropertyVal Name="Super">Listbox</PropertyVal>
+  <PropertyVal Name="Index">-2147483648</PropertyVal>
+  <PropertyVal Name="Name">lbSource</PropertyVal>
+  <ControlIndex>2</ControlIndex>
+  <Locked>0</Locked>
+  <PartID>301195263</PartID>
+ </Control>
+</block>
+<block type="Menu" ID="1018152959">
+ <ObjName>MainMenuBar</ObjName>
+ <ObjContainerID>0</ObjContainerID>
+ <MenuItem>
+  <ItemSpecialMenu>0</ItemSpecialMenu>
+  <ItemName>FileMenu</ItemName>
+  <ItemText>&amp;File</ItemText>
+  <ItemIndex>-2147483648</ItemIndex>
+  <ItemShortcut></ItemShortcut>
+  <MenuAutoEnable>1</MenuAutoEnable>
+  <TextEncoding>134217984</TextEncoding>
+  <MenuItemVisible>1</MenuItemVisible>
+  <ItemFlags>0</ItemFlags>
+  <Superclass>MenuItem</Superclass>
+  <MenuItem>
+   <ItemSpecialMenu>0</ItemSpecialMenu>
+   <ItemName>FileQuit</ItemName>
+   <ItemText>#App.kFileQuit</ItemText>
+   <ItemIndex>-2147483648</ItemIndex>
+   <ItemShortcut>#App.kFileQuitShortcut</ItemShortcut>
+   <MenuShortcut>#App.kFileQuitShortcut</MenuShortcut>
+   <MenuAutoEnable>1</MenuAutoEnable>
+   <TextEncoding>134217984</TextEncoding>
+   <MenuItemVisible>1</MenuItemVisible>
+   <ItemFlags>0</ItemFlags>
+   <Superclass>QuitMenuItem</Superclass>
+  </MenuItem>
+ </MenuItem>
+ <MenuItem>
+  <ItemSpecialMenu>0</ItemSpecialMenu>
+  <ItemName>EditMenu</ItemName>
+  <ItemText>&amp;Edit</ItemText>
+  <ItemIndex>-2147483648</ItemIndex>
+  <ItemShortcut></ItemShortcut>
+  <MenuAutoEnable>1</MenuAutoEnable>
+  <TextEncoding>134217984</TextEncoding>
+  <MenuItemVisible>1</MenuItemVisible>
+  <ItemFlags>0</ItemFlags>
+  <Superclass>MenuItem</Superclass>
+  <MenuItem>
+   <ItemSpecialMenu>0</ItemSpecialMenu>
+   <ItemName>EditUndo</ItemName>
+   <ItemText>&amp;Undo</ItemText>
+   <ItemIndex>-2147483648</ItemIndex>
+   <ItemShortcut>Cmd+Z</ItemShortcut>
+   <MenuShortcut>Z</MenuShortcut>
+   <MenuShortcutModifier>1</MenuShortcutModifier>
+   <MenuAutoEnable>1</MenuAutoEnable>
+   <TextEncoding>134217984</TextEncoding>
+   <MenuItemVisible>1</MenuItemVisible>
+   <ItemFlags>0</ItemFlags>
+   <Superclass>MenuItem</Superclass>
+  </MenuItem>
+  <MenuItem>
+   <ItemSpecialMenu>0</ItemSpecialMenu>
+   <ItemName>EditSeparator1</ItemName>
+   <ItemText>-</ItemText>
+   <ItemIndex>-2147483648</ItemIndex>
+   <ItemShortcut></ItemShortcut>
+   <MenuAutoEnable>1</MenuAutoEnable>
+   <TextEncoding>134217984</TextEncoding>
+   <MenuItemVisible>1</MenuItemVisible>
+   <ItemFlags>0</ItemFlags>
+   <Superclass>MenuItem</Superclass>
+  </MenuItem>
+  <MenuItem>
+   <ItemSpecialMenu>0</ItemSpecialMenu>
+   <ItemName>EditCut</ItemName>
+   <ItemText>Cu&amp;t</ItemText>
+   <ItemIndex>-2147483648</ItemIndex>
+   <ItemShortcut>Cmd+X</ItemShortcut>
+   <MenuShortcut>X</MenuShortcut>
+   <MenuShortcutModifier>1</MenuShortcutModifier>
+   <MenuAutoEnable>1</MenuAutoEnable>
+   <TextEncoding>134217984</TextEncoding>
+   <MenuItemVisible>1</MenuItemVisible>
+   <ItemFlags>0</ItemFlags>
+   <Superclass>MenuItem</Superclass>
+  </MenuItem>
+  <MenuItem>
+   <ItemSpecialMenu>0</ItemSpecialMenu>
+   <ItemName>EditCopy</ItemName>
+   <ItemText>&amp;Copy</ItemText>
+   <ItemIndex>-2147483648</ItemIndex>
+   <ItemShortcut>Cmd+C</ItemShortcut>
+   <MenuShortcut>C</MenuShortcut>
+   <MenuShortcutModifier>1</MenuShortcutModifier>
+   <MenuAutoEnable>1</MenuAutoEnable>
+   <TextEncoding>134217984</TextEncoding>
+   <MenuItemVisible>1</MenuItemVisible>
+   <ItemFlags>0</ItemFlags>
+   <Superclass>MenuItem</Superclass>
+  </MenuItem>
+  <MenuItem>
+   <ItemSpecialMenu>0</ItemSpecialMenu>
+   <ItemName>EditPaste</ItemName>
+   <ItemText>&amp;Paste</ItemText>
+   <ItemIndex>-2147483648</ItemIndex>
+   <ItemShortcut>Cmd+V</ItemShortcut>
+   <MenuShortcut>V</MenuShortcut>
+   <MenuShortcutModifier>1</MenuShortcutModifier>
+   <MenuAutoEnable>1</MenuAutoEnable>
+   <TextEncoding>134217984</TextEncoding>
+   <MenuItemVisible>1</MenuItemVisible>
+   <ItemFlags>0</ItemFlags>
+   <Superclass>MenuItem</Superclass>
+  </MenuItem>
+  <MenuItem>
+   <ItemSpecialMenu>0</ItemSpecialMenu>
+   <ItemName>EditClear</ItemName>
+   <ItemText>#App.kEditClear</ItemText>
+   <ItemIndex>-2147483648</ItemIndex>
+   <ItemShortcut></ItemShortcut>
+   <MenuAutoEnable>1</MenuAutoEnable>
+   <TextEncoding>134217984</TextEncoding>
+   <MenuItemVisible>1</MenuItemVisible>
+   <ItemFlags>0</ItemFlags>
+   <Superclass>MenuItem</Superclass>
+  </MenuItem>
+  <MenuItem>
+   <ItemSpecialMenu>0</ItemSpecialMenu>
+   <ItemName>EditSeparator2</ItemName>
+   <ItemText>-</ItemText>
+   <ItemIndex>-2147483648</ItemIndex>
+   <ItemShortcut></ItemShortcut>
+   <MenuAutoEnable>1</MenuAutoEnable>
+   <TextEncoding>134217984</TextEncoding>
+   <MenuItemVisible>1</MenuItemVisible>
+   <ItemFlags>0</ItemFlags>
+   <Superclass>MenuItem</Superclass>
+  </MenuItem>
+  <MenuItem>
+   <ItemSpecialMenu>0</ItemSpecialMenu>
+   <ItemName>EditSelectAll</ItemName>
+   <ItemText>Select &amp;All</ItemText>
+   <ItemIndex>-2147483648</ItemIndex>
+   <ItemShortcut>Cmd+A</ItemShortcut>
+   <MenuShortcut>A</MenuShortcut>
+   <MenuShortcutModifier>1</MenuShortcutModifier>
+   <MenuAutoEnable>1</MenuAutoEnable>
+   <TextEncoding>134217984</TextEncoding>
+   <MenuItemVisible>1</MenuItemVisible>
+   <ItemFlags>0</ItemFlags>
+   <Superclass>MenuItem</Superclass>
+  </MenuItem>
+ </MenuItem>
+</block>
+<block type="BuildAutomation" ID="1065715711">
+ <ObjName>Build Automation</ObjName>
+ <ObjContainerID>0</ObjContainerID>
+</block>
+<block type="BuildStepsList" ID="605263871">
+ <ObjName>Linux</ObjName>
+ <ObjContainerID>1065715711</ObjContainerID>
+</block>
+<block type="BuildProjectStep" ID="328599551">
+ <ObjName>Build</ObjName>
+ <ObjContainerID>605263871</ObjContainerID>
+</block>
+<block type="BuildStepsList" ID="757219327">
+ <ObjName>Mac OS X</ObjName>
+ <ObjContainerID>1065715711</ObjContainerID>
+</block>
+<block type="BuildProjectStep" ID="954460159">
+ <ObjName>Build</ObjName>
+ <ObjContainerID>757219327</ObjContainerID>
+</block>
+<block type="BuildStepsList" ID="1473044479">
+ <ObjName>Windows</ObjName>
+ <ObjContainerID>1065715711</ObjContainerID>
+</block>
+<block type="BuildProjectStep" ID="573767679">
+ <ObjName>Build</ObjName>
+ <ObjContainerID>1473044479</ObjContainerID>
+</block>
+<block type="UIState" ID="0">
+ <WarningPreferences>
+  <ItemName>5</ItemName>
+  <ItemData>0</ItemData>
+  <ItemName>6</ItemName>
+  <ItemData>0</ItemData>
+  <ItemName>7</ItemName>
+  <ItemData>0</ItemData>
+  <ItemName>14</ItemName>
+  <ItemData>0</ItemData>
+  <ItemName>2</ItemName>
+  <ItemData>0</ItemData>
+  <ItemName>-2</ItemName>
+  <ItemData>0</ItemData>
+ </WarningPreferences>
+ <StudioWindowState>
+  <EditBounds><Rect left="0" top="23" width="1440" height="877"/></EditBounds>
+  <WindowMaximized>0</WindowMaximized>
+  <Editors>
+   <EditorCount>1</EditorCount>
+   <Editor>
+    <EditorIndex>0</EditorIndex>
+    <EditorLocation>Window1.Controls.Placard1.DropObject</EditorLocation>
+    <EditorPath></EditorPath>
+    <EditingPartID>1265532927</EditingPartID>
+    <EditorPath></EditorPath>
+   </Editor>
+   <SelectedTab>0</SelectedTab>
+  </Editors>
+ </StudioWindowState>
+</block>
+</RBProject>
