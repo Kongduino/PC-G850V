@@ -224,6 +224,12 @@ Between switching the first pin HIGH and LOW, the code loops around, going nowhe
 
 This takes about 6.5 to 7 seconds at regular speed, and twice as much when clock speed is halved. A menu after the first run offers the 8 and 4 options. Q to exit, and any other key to keep going.
 
+- **PBAR.asm**
+
+This is a progress bar in ASM (there is an equivalent in BASIC, much much slower). The BASIC version is much more flexible (you pass a size and a percentage, and the PBar can be displayed anywhere at pixel offset x,y), whereas the ASM version is constrained to char positions (x:0,23, y:0,5), and you have to do your own calculations: if your PBar is 96 pixels wide, and you want 10% displayed, you have to tell the function that you want a 4 (or 5) pixel-wide band. I'll add code to take care of this but divisions in ASM suck. But if you want a speedy progress bar, that's the ticket.
+
+I'll more UI elements as the need arise.
+
 ### functions
 
 - `CLS`/`CLS0`
