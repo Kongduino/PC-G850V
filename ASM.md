@@ -228,6 +228,29 @@ This takes about 6.5 to 7 seconds at regular speed, and twice as much when clock
 
 This is a progress bar in ASM (there is an equivalent in BASIC, much much slower). The BASIC version is much more flexible (you pass a size and a percentage, and the PBar can be displayed anywhere at pixel offset x,y), whereas the ASM version is constrained to char positions (x:0,23, y:0,5), and you have to do your own calculations: if your PBar is 96 pixels wide, and you want 10% displayed, you have to tell the function that you want a 4 (or 5) pixel-wide band. I'll add code to take care of this but divisions in ASM suck. But if you want a speedy progress bar, that's the ticket.
 
+- **LABEL.asm**
+
+This is a label in ASM: The idea originally was to draw a text, and surround it with a box, like an emoty PBar. Turns out, it wasn't looking too good, because the top and bottom pixels of the box are also the top and bottom pixels of the characters. So instead I invert all the pixels within the label, making sure the top and bottom pixels stay black. This is done by:
+
+1. Draw the string
+2. Read the string's pixels into a buffer
+3. XOR (invert) and OR (set bits):
+
+```assembly
+1280 XOR 7EH
+1290 OR 81H
+```
+4. Display the buffer
+
+Works like a charm. Most of the calculations are done by the code too, so all you have to provide is a string, a length, an XY position, and the code takes care of the rest. Note the cute hack to multiply by 6 (A characters times 6 pixels = label width):
+
+```assembly
+1090 ADD A,A ; B*2
+1100 LD C,A
+1110 ADD A,A ; B*4
+1120 ADD A,C ; B*6
+```
+
 I'll more UI elements as the need arise.
 
 ### functions
