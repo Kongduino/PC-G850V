@@ -251,6 +251,8 @@ Works like a charm. Most of the calculations are done by the code too, so all yo
 1120 ADD A,C ; B*6
 ```
 
+![LABELPBAR](LABELPBAR.jpg)
+
 I'll more UI elements as the need arise.
 
 ### functions
