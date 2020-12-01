@@ -253,6 +253,10 @@ Works like a charm. Most of the calculations are done by the code too, so all yo
 
 ![LABELPBAR](LABELPBAR.jpg)
 
+- **FNKEYS.asm**
+
+Previous models like the PC-1480U have physical Function Keys. Well then let's make do at the expense of a line on the screen: after the PC-G850V's screen has 2 more lines... The code reuses the code for Labels, so that's hmmm, economical. You can reuse the LABEL code, adding a few more variables. The sample code displays 6 keys and shows what's been pressed.
+
 I'll more UI elements as the need arise.
 
 ### functions
