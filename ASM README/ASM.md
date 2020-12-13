@@ -261,6 +261,15 @@ Previous models like the PC-1480U have physical Function Keys. Well then let's m
 
 I'll more UI elements as the need arise.
 
+- **MATASANO**
+
+Because I am a little unhinged, I decided to redo the Matasano Cryptopals challenges (from back when Thomas H. Ptacek was with Matasano Security) in z80 ASM. Not sure how far I can go without some help – both me and my Sharp will need some extra oomph at some point, but it'll do me good.
+
+Challenges 1-1 to 1-5 are done, with 1-6 on the way. For the latter, I need a couple of things to work (namely Hamming Distance and Base64 decoding: the first is done, see (HammingDistance.asm)[https://github.com/Kongduino/PC-G850V/blob/master/MATASANO/HammingDistance.asm])
+
+
+
+
 ### functions
 
 - `CLS`/`CLS0`
