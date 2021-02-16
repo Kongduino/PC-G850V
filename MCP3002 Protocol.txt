@@ -1,0 +1,161 @@
+a = [0,2,6,2,6,0,4,2,6,0,5,0,5,0,5,0,5,0,5,0,5,0,5,0,5,0,5,0,5,0,5,8,12,99];
+for(i=0; i<34;i++) {
+  x=a[i];
+  console.log("•",i,"["+x+"]")
+  if(x==0) console.log("   everything LOW");
+  else {
+    if(x==99) {
+      console.log(" - THE END - "); break;
+    }
+    if(x&1) {
+      console.log("   Dout HIGH");
+      console.log("    . read 1 bit");
+    }
+    if(x&2) {
+      console.log("   Din HIGH");
+    } else {
+      console.log("   Din LOW");
+    }
+    if(x&4) {
+      console.log("   CLK HIGH");
+    } else {
+      console.log("   CLK LOW");
+    }
+    if(x&8) {
+      console.log("   CS HIGH");
+    } else {
+      console.log("   CS LOW");
+    }
+  }
+}
+
+• 0 [0]
+   everything LOW
+• 1 [2]
+   Din HIGH |
+   CLK LOW  | START
+   CS LOW   |
+• 2 [6]
+   Din HIGH
+   CLK HIGH
+   CS LOW
+• 3 [2]
+   Din HIGH |
+   CLK LOW  | SGL/DIFF = 1
+   CS LOW   |
+• 4 [6]
+   Din HIGH
+   CLK HIGH
+   CS LOW
+• 5 [0]
+   everything LOW
+• 6 [4]
+   Din LOW  |
+   CLK HIGH | ODD/SIGN = 0
+   CS LOW   |
+• 7 [2]
+   Din HIGH |
+   CLK LOW  | 
+   CS LOW   |
+• 8 [6]
+   Din HIGH
+   CLK HIGH | MSBF = 1 MSB
+   CS LOW
+​ • 9 [0]
+​    everything LOW
+​ • 10 [5]
+​    Dout HIGH      | Repeated 10 times
+​     . read 1 bit
+​    Din LOW
+​    CLK HIGH
+​    CS LOW
+​ • 11 [0]
+​    everything LOW | stop
+​ • 12 [5]
+​    Dout HIGH
+​     . read 1 bit
+​    Din LOW
+​    CLK HIGH
+​    CS LOW
+​ • 13 [0]
+​    everything LOW
+• 14 [5]
+   Dout HIGH
+    . read 1 bit
+   Din LOW
+   CLK HIGH
+   CS LOW
+• 15 [0]
+   everything LOW
+• 16 [5]
+   Dout HIGH
+    . read 1 bit
+   Din LOW
+   CLK HIGH
+   CS LOW
+• 17 [0]
+   everything LOW
+• 18 [5]
+   Dout HIGH
+    . read 1 bit
+   Din LOW
+   CLK HIGH
+   CS LOW
+• 19 [0]
+   everything LOW
+• 20 [5]
+   Dout HIGH
+    . read 1 bit
+   Din LOW
+   CLK HIGH
+   CS LOW
+• 21 [0]
+   everything LOW
+• 22 [5]
+   Dout HIGH
+    . read 1 bit
+   Din LOW
+   CLK HIGH
+   CS LOW
+• 23 [0]
+   everything LOW
+• 24 [5]
+   Dout HIGH
+    . read 1 bit
+   Din LOW
+   CLK HIGH
+   CS LOW
+• 25 [0]
+   everything LOW
+• 26 [5]
+   Dout HIGH
+    . read 1 bit
+   Din LOW
+   CLK HIGH
+   CS LOW
+• 27 [0]
+   everything LOW
+• 28 [5]
+   Dout HIGH
+    . read 1 bit
+   Din LOW
+   CLK HIGH
+   CS LOW
+• 29 [0]
+   everything LOW
+• 30 [5]
+   Dout HIGH
+    . read 1 bit
+   Din LOW
+   CLK HIGH
+   CS LOW
+• 31 [8]
+   Din LOW |
+   CLK LOW | End of transmission
+   CS HIGH |
+• 32 [12]
+   Din LOW
+   CLK HIGH
+   CS HIGH
+• 33 [99]
+ - THE END - 
