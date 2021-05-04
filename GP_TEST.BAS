@@ -1,0 +1,24 @@
+100 REM SAVE "GP_TEST.BAS"
+101 REM https://cutt.ly/bbbkPin
+102 REM BY @hangyodon1123
+103 REM updated by @Kongduino
+110CLS: WAIT 1
+120 D=24:X=30:Y=10:W=5
+130 DIM A$(0)*D
+140 WAIT W
+150 LINE (X-2,1)-(X+D+1,Y+2),B
+160 FOR I=0 TO 15
+170 A$(0)=HEX$(I)
+180 A$(0)=A$(0)+A$(0)
+190 A$(0)=A$(0)+A$(0)
+200 A$(0)=A$(0)+A$(0)
+210 A$(0)=A$(0)+A$(0)
+220 FOR J=0 TO 2
+230 GCURSOR (X,Y): GPRINT A$(0)
+240 X=X+8
+250 NEXT
+260 X=30
+270 NEXT
+280 END
+
+
