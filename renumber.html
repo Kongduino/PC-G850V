@@ -180,6 +180,7 @@ placeFooter();
 $("textarea#text2renumber").css({'height':'600px'});
 function renumber() {
   var t=document.getElementById('text2renumber');
+  t.value=t.value+'\n';
   var f=document.getElementById('final');
   var ss=t.value.replace(/(\d+ POKE &H[0-9A-F]+,&H[0-9A-F][0-9A-F])\n\d+ POKE &H[0-9A-F]+(,&H[0-9A-F][0-9A-F])\n\d+ POKE &H[0-9A-F]+(,&H[0-9A-F][0-9A-F])\n\d+ POKE &H[0-9A-F]+(,&H[0-9A-F][0-9A-F])\n/gi, "$1$2$3$4\n")
   t.value=ss;
