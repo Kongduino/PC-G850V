@@ -265,9 +265,11 @@ I'll more UI elements as the need arise.
 
 Because I am a little unhinged, I decided to redo the Matasano Cryptopals challenges (from back when Thomas H. Ptacek was with Matasano Security) in z80 ASM. Not sure how far I can go without some help – both me and my Sharp will need some extra oomph at some point, but it'll do me good.
 
-Challenges 1-1 to 1-5 are done, with 1-6 on the way. For the latter, I need a couple of things to work (namely Hamming Distance and Base64 decoding: the first is done, see (HammingDistance.asm)[https://github.com/Kongduino/PC-G850V/blob/master/MATASANO/HammingDistance.asm])
+Challenges 1-1 to 1-5 are done, with 1-6 on the way. For the latter, I need a couple of things to work (namely Hamming Distance and Base64 decoding: the first is done, see [HammingDistance.asm]([https://github.com/Kongduino/PC-G850V/blob/master/MATASANO/HammingDistance.asm]).
 
+![Hamming Distance](HammingDistance.jpg)
 
+The code for the Hamming Distance itself, `HAMDIS`, is 21 lines long: playing with bits is something that bare metal does well.
 
 
 ### functions
@@ -285,3 +287,11 @@ CLS is probably not THAT exciting (as the BASIC command will probably do the sam
 The password utility mentioned above. It uses the CLSX, CLSY variables for positioning. It displays "pwd: "+password (if any).
 
 ![BASLIB](BASLIB.png)
+
+- `DUMP8000`
+
+This is a simple test for the 64KB RAM card designed by [HWR0](https://github.com/hwreverse). He provided his own [test code](https://github.com/hwreverse/64memcheck), but I needed something a little more specific to my use case (moving strings in and out of storage).
+
+This seems to work well.
+
+![demo](THISISATEST.gif)
