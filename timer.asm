@@ -56,6 +56,7 @@
 1110 CP 0
 1120 JP Z,WAIT
 1130 RET
+
 1140THEEND: LD A,0
 1150 OUT (67H),A
 1160 LD HL,BYE
@@ -99,7 +100,7 @@
 3580 LD A,(HL)
 3590 RET
 
-4000MYLOOP: LD A,1 ; Bit 0: 1st pin (after VSS & GND) is HIGH. 2 cycles
+4000MYLOOP: LD A,128 ; Bit 7: last pin (after VSS & GND) is HIGH. 2 cycles
 4010 ; change A's value to match the pin(s) you want to flip
 4020 OUT (62H),A ; HIGH ; 3 cycles
 4030 LD A,0 ; (256 times) 2 cycles
