@@ -292,6 +292,12 @@ The password utility mentioned above. It uses the CLSX, CLSY variables for posit
 
 This is a simple test for the 64KB RAM card designed by [HWR0](https://github.com/hwreverse). He provided his own [test code](https://github.com/hwreverse/64memcheck), but I needed something a little more specific to my use case (moving strings in and out of storage).
 
-This seems to work well.
+This seems to work well. The one thing that's important to remember is that since:
+
+1. interrupts are disabled,
+2. The addressing is set on ROM space
+
+you have to be in and out as quickly as possible, and make NO CALLS to ROM routines. `RAM_ON`, copy stuff, `RAM_OFF`, do your thing. In this case, I copy the memory over to `BUFFER`, restore the ROM, and THEN only display the string.
+
 
 ![demo](THISISATEST.gif)
