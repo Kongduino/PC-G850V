@@ -1,4 +1,6 @@
 10 ORG 400H
+11 ; leaving space for RAMDISK.ASM
+12 ; used as a debug tool
 20 JP MAIN
 30REGOUT EQU 0BD03H
 40PUTSTR EQU 0BFF1H
