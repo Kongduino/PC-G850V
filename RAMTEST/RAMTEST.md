@@ -17,6 +17,7 @@ There's a basic (haha) help menu, called by hitting `H`. All memory actions are 
 * [G]O TO ADDRESS
 * [J/K] GO DOWN / UP 24 BYTES
 * [↓/↑] GO DOWN / UP 4 BYTES
+* [B]ANK NUMBER
 
 ![HELP](HELP.jpg)
 ⇒ The Help menu
@@ -32,6 +33,9 @@ There's a basic (haha) help menu, called by hitting `H`. All memory actions are 
 ![STRING_1](STRING_1.jpg)
 ⇒ Entering a string
 
+![BANK_0](BANK_0.jpg)
+![BANK_1](BANK_1.jpg)
+⇒ Changing RAM banks
 
 
 ## The Card
