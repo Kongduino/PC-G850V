@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Renumber</title>
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300, 400, 700">
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
   <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
   <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
@@ -31,19 +31,46 @@
       <h1>BMP</h1>
     </div>
 
-    <div data-role="main" class="ui-content" ondrop="dropHandler(event);">
-      <input type="file" id="files" name="files[]" multiple />
-      <output id="list"></output>
-      <div id="dropzone" style="float: left; width: 300px; height: 140px; padding: 10px;" ondragover="dragOverHandler(event);">
-        <span id="dimensions"></span><br />
-        <canvas id="canvas0" style="width:288px; height: 96px; float: left;"></canvas>
+    <div data-role="main" class="ui-content">
+    <input type="file" id="files" name="files[]" />
+    <output id="list"></output>
+    <div style="float: left; width: 300px; height: 140px; padding: 10px;">
+      <span id="dimensions"></span><br />
+      <canvas id="canvas0" style="width:144px; height: 48px; float: left;"></canvas><br /><br />
+      <div id="adjustments" style="display: none;">
         <label for="fader">Intensity</label>
-        <input type="range" min="0" max="255" value="48" id="fader" onChange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);draw(img, document.getElementById('canvas1'), false, 800, 600, false);">
+        <input type="range" min="0" max="255" value="117" id="fader" onChange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);draw(img, document.getElementById('canvas1'), false, 800, 600, false);">
+
         <label for="ivReq">Invert</label>
         <input id="ivReq" type="checkbox" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);">
+
+        <label for="ivGrey">Greyscale</label>
+        <input id="ivGrey" type="checkbox" onchange="grScale = 1 - grScale; draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);">
+
+        <label for="alignLeft">Left</label>
+        <input id="alignLeft" type="radio" name="positionX" value="left" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);" checked>
+
+        <label for="alignMiddle">Center</label>
+        <input id="alignMiddle" type="radio" name="positionX" value="center" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);">
+
+        <label for="alignRight">Right</label>
+        <input id="alignRight" type="radio" name="positionX" value="center" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);"><br />
+
+        <label for="alignTop">Top</label>
+        <input id="alignTop" type="radio" name="positionY" value="center" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);" checked>
+
+        <label for="alignHMiddle">Middle</label>
+        <input id="alignHMiddle" type="radio" name="positionY" value="right" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);">
+
+        <label for="alignBottom">Bottom</label>
+          <input id="alignBottom" type="radio" name="positionY" value="right" onchange="draw(img, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);">
       </div>
-      <canvas id="canvas1" width="800px height=600px" style="float: left;"></canvas>
-      <textarea style="float: left; width: 400px; height: 600px; padding: 10px;" id="result"></textarea>
+      <div style="float: left; width: 850px; height: 450px; padding: 10px;">
+        <code contenteditable="true" id="finalBASIC" style="float: left; width: 250px; height: 300px; overflow: scroll;"></code>
+        <code contenteditable="true" id="finalASM" style="float: left; width: 300px; height: 300px; overflow: scroll;"></code>
+      </div>
+    </div>
+    <canvas id="canvas1" width=800px height=600px style="float: right;"></canvas>
     </div>
 
     <div data-role="footer" id="footer">
@@ -52,48 +79,9 @@
   </div>
 <script>
 if (window.File && window.FileReader && window.FileList && window.Blob) {
-  	console.log('The File APIs are supported in this browser.');
+  console.log('The File APIs are supported in this browser.');
 } else {
   console.log('The File APIs are not fully supported in this browser.');
-}
-
-function dropHandler(ev) {
-  console.log('File(s) dropped');
-  // Prevent default behavior (Prevent file from being opened)
-  ev.preventDefault();
-  if (ev.dataTransfer.items) {
-    // Use DataTransferItemList interface to access the file(s)
-    for (var i = 0; i < ev.dataTransfer.items.length; i++) {
-      // If dropped items aren't files, reject them
-      if (ev.dataTransfer.items[i].kind === 'file') {
-        var file = ev.dataTransfer.items[i].getAsFile();
-        console.log('... item[' + i + '].name = ' + file.name);
-  $('#ivReq').attr("checked", false).checkboxradio("refresh");
-  fr = new FileReader();
-  fr.readAsDataURL(file);
-  fr.onload = function () {
-    img = new Image();
-    img.src = fr.result;
-    img.onload = function() {
-      draw(this, document.getElementById('canvas0'), true, 144, 48, ivReq.checked);
-      draw(this, document.getElementById('canvas1'), false, 800, 600, false);
-    };i=ev.dataTransfer.items.length+1;
-  }
-      }
-    }
-  } else {
-    // Use DataTransfer interface to access the file(s)
-    for (var i = 0; i < ev.dataTransfer.files.length; i++) {
-      console.log('DataTransfer file[' + i + '].name = ' + ev.dataTransfer.files[i].name);
-    }
-  }
-  dropzone.style.background="";
-}
-
-function dragOverHandler(ev) {
-  // Prevent default behavior (Prevent file from being opened)
-  ev.preventDefault();
-  dropzone.style.background="#eeddcc";
 }
 
 function placeFooter() {
@@ -121,21 +109,29 @@ function draw(img, cv, gr, mw, mh, iv=false) {
   var sh=img.height;
   var dw=cv.width;
   var dh=cv.height;
-  ctx0.clearRect(0,0,dw,dh);
-  console.log("original size:",sw,sh)
-  console.log("canvas size:",dw,dh)
+  ctx0.clearRect(0, 0, cv.width, cv.height);
+  ctx0.fillStyle = 'white';
+  ctx0.fillRect(0, 0, 144, 48);
+  console.log("original size:", sw, sh);
+  console.log("canvas size:", dw, dh);
+  var posX=0, posY=0;
   if(sw>mw||sh>mh) {
     var r0=sw/mw;
     var r1=sh/mh;
     if(r1>r0)r0=r1;
-    sw0=Math.floor(sw/r0);
-    sh0=Math.floor(sh/r0);
-    ctx0.drawImage(img, 0, 0, sw, sh, 0, 0, sw0, sh0);
-    console.log("resizing to:",sw0,sh0);
+    var sw0=Math.floor(sw/r0);
+    var sh0=Math.floor(sh/r0);
+    if (alignMiddle.checked) posX=(144-sw0)/2;
+    if (alignRight.checked) posX=(144-sw0);
+    if (alignHMiddle.checked) posY=(48-sh0)/2;
+    if (alignBottom.checked) posY=(148-sh0);
+    ctx0.drawImage(img, 0, 0, sw, sh, posX, 0, sw0, sh0);
+    console.log("resizing to:", sw0, sh0);
     if(gr) dimensions.innerHTML=sw0.toString()+"x"+sh0.toString();
   } else {
-    sw0=dw; sh0=dh;
-    ctx0.drawImage(img, 0, 0);
+    if (alignMiddle.checked) posX=(144-sw)/2;
+    if (alignRight.checked) posX=(144-sw);
+    ctx0.drawImage(img, posX, 0);
     if(gr) dimensions.innerHTML=sw.toString()+"x"+sh.toString();
   }
 
@@ -143,7 +139,7 @@ function draw(img, cv, gr, mw, mh, iv=false) {
     var imageData = ct.getImageData(0, 0, cv.width, cv.height);
     var data = imageData.data;
     for (var i = 0; i < data.length; i += 4) {
-      data[i] = 255 - data[i];     // red
+      data[i]     = 255 - data[i];     // red
       data[i + 1] = 255 - data[i + 1]; // green
       data[i + 2] = 255 - data[i + 2]; // blue
     }
@@ -156,75 +152,123 @@ function draw(img, cv, gr, mw, mh, iv=false) {
     var data = imageData.data;
     for (var i = 0; i < data.length; i += 4) {
       var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-      if(avg<threshold) avg=0;
-      else avg=255;
+      if (grScale==0) {
+        if(avg<threshold) avg=0;
+        else avg=255;
+      } else {
+        // graded colors
+        avg = Math.floor(avg/64)*64;
+      }
       data[i]     = avg; // red
       data[i + 1] = avg; // green
       data[i + 2] = avg; // blue
     }
     ct.putImageData(imageData, 0, 0);
+    var txt=[];
+    var yxy=[];
+    txt.push("10 CLS: OF=0")
+    var ln=11, ln0=1000;
+    for (n=0;n<48;n+=8) {
+      asm="";
+      for (i=0; i<144; i+=8) {
+        var s=" GCURSOR (OF+"+i.toString()+", "+(n+7).toString()+")\n";
+        s+=" GPRINT \"";
+        var sum=0;
+        for(var y=0; y<8;y++) {
+          x=0;
+          for(var j=0; j<8;j++) {
+            //if((n+7-j)>=sh0|| (i+y)>=sw0) x=255;
+            //else {
+              var dp=(n+7-j) * (cv.width * 4) + (i+y) * 4;
+              var c=data[dp];
+              x=(x<<1)+(c&1);
+            //}
+          }
+          if (grScale==0) x=255-x;
+          if(x<16) {
+            s+="0";
+            asm+="0";
+          }
+          s+=x.toString(16);
+          asm+=x.toString(16).toUpperCase()+"H";
+          sum+=x;
+        }
+        s+="\"";
+        if(sum>0) {
+          t=s.toUpperCase().split("\n");
+          txt.push(ln.toString()+t[0]);
+          ln+=1;
+          txt.push(ln.toString()+t[1]);
+          ln+=1;
+        }
+      }
+      for(i=0; i<18; i++) {
+        asm0=asm.substr(i*24, 24).replace(/([0-9A-F][0-9A-F]H)([0-9A-F][0-9A-F]H)([0-9A-F][0-9A-F]H)([0-9A-F][0-9A-F]H)([0-9A-F][0-9A-F]H)([0-9A-F][0-9A-F]H)([0-9A-F][0-9A-F]H)([0-9A-F][0-9A-F]H)/g, " 0$1, 0$2, 0$3, 0$4, 0$5, 0$6, 0$7, 0$8");
+        var sup="";
+        if(i==0) sup="L"+(n/8).toString()+":";
+        yxy.push(ln0.toString()+sup+" DB "+asm0);
+        ln0++;
+      }
+    }
+    finalBASIC.innerHTML=txt.join("<br />\n")+"<br /><br />"+String.fromCharCode(26);
+    var zxz=[];
+    zxz.push("10 ORG 100H");
+    zxz.push("20 JP MAIN");
+    zxz.push("30GPF EQU 0BFD0H");
+    zxz.push("40WAITK EQU 0BFCDH");
+    zxz.push("50RPTCHR EQU 0BFEEH");
+    zxz.push("60MAIN: CALL CLS");
+
+    ln0=60;
+    for(i=0;i<6;i++) {
+      zxz.push(ln0.toString()+" LD HL, L"+i.toString());
+      ln0+=10;
+      zxz.push(ln0.toString()+" LD B, 144");
+      ln0+=10;
+      zxz.push(ln0.toString()+" LD DE, 0"+i.toString()+"00H");
+      ln0+=10;
+      zxz.push(ln0.toString()+" CALL GPF");
+      ln0+=10;
+    }
+    zxz.push(ln0.toString()+"MAIN0: CALL WAITK");
+    ln0+=10;
+    zxz.push(ln0.toString()+" CP 0");
+    ln0+=10;
+    zxz.push(ln0.toString()+" JP Z, MAIN0");
+    ln0+=10;
+    zxz.push(ln0.toString()+" RET");
+    ln0+=10;
+    zxz.push(ln0.toString()+"CLS: LD B, 144");
+    ln0+=10;
+    zxz.push(ln0.toString()+" LD DE, 0");
+    ln0+=10;
+    zxz.push(ln0.toString()+"CLS0: LD A, 32");
+    ln0+=10;
+    zxz.push(ln0.toString()+" CALL RPTCHR");
+    ln0+=10;
+    zxz.push(ln0.toString()+" RET");
+    ln0+=10;
+    zxz.push("");
+
+    
+    finalASM.innerHTML=zxz.join("<br />\n")+"<br />\n"+yxy.join("<br />\n")+"<br /><br />"+String.fromCharCode(26);
   };
   if(gr) grayscale(ctx0, cv);
   if(iv) invert(ctx0, cv);
-  if(gr) {
-    var nw,nh;
-    if ((sw0%8)==0) nw=sw0;
-    else nw=sw0+(8-(sw0%8));
-    if ((sh0%8)==0) nh=sh0;
-    else nh=sh0+(8-(sh0%8));
-    console.log("Producing the data: ",nw,nh);
-    var rows=[];
-    for(j=0; j<nh; j++) {
-      var row=[];
-      for(i=0; i<nw; i+=8) {
-        var px=0;
-        for(n=0; n<8; n++) {
-          var pixel = ctx0.getImageData(n, j, 1, 1);
-          var data = pixel.data;
-          px=px+(data[0]&1<<(7-j));
-        }
-        rows.push(px);
-      }
-    }
-    sw=nw/8;
-    sh=nh/8;
-    console.log("sw:",sw);
-    console.log("sh:",sh);
-    t=[]; line=10;
-    for(n=0; n<sh; n++) {
-      for(i=0; i<sw; i++) {
-        var s="";
-        for(bit=7; bit>-1; bit--) {
-          var sum = 0;
-          for(j=0; j<8; j++) {
-            //console.log((n*(sh-1)*sw)+j*sw+i);
-            sum+=((rows[(n*(sh-1)*sw)+j*sw+i]>>>bit) & 1)<<j;
-          }
-          if(sum<16) s=s+'0';
-          s=s+sum.toString(16).toUpperCase();
-        }
-        t.push(line.toString()+' GCURSOR ('+((144-nw)+i*8).toString()+','+(n*8).toString()+')');
-        line+=10;
-        t.push(line.toString()+' GPRINT "'+s+'"');
-        line+=10;
-      }
-    }
-    document.getElementById('result').value=t.join("\n");
-    $("textarea#result").css({'height':'600px'});
-    $("textarea#result").css({'width':'600px'});
-  }
+  adjustments.style.display='block';
 }
 
-var fr,f;
+var fr, f;
 function handleFileSelect(evt) {
   var files = evt.target.files; // FileList object
   // files is a FileList of File objects. List some properties.
   var output = [];
   for (var i = 0, f; f = files[i]; i++) {
+    console.log(f);
     fr=f;
-    output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-    f.size, ' bytes, last modified: ',
-    f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+    output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ', 
+    f.size, ' bytes, last modified: ', 
+    f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a', 
     '</li>');
   }
   $('#ivReq').attr("checked", false).checkboxradio("refresh");
@@ -241,6 +285,8 @@ function handleFileSelect(evt) {
   document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
 }
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+var grScale = 0;
 </script>
 </body>
 </html>
