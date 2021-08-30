@@ -52,6 +52,7 @@
 510 POP DE
 520 LD B,6
 530 CALL GPF ; draw
+535 ; print quotients / remainders
 540 LD A,133
 550 CALL DVD6
 560 PUSH AF
