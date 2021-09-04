@@ -286,7 +286,7 @@
 4200 JP NZ,CALC02 ; if A = 0, set to 1
 4210 LD A,1
 4220 JP CALC03
-4230CALC02: LD B,A ; else shift left '1' B times
+4230CALC02: LD B,A ; else shift '1' left B times
 4240 LD A,1
 4250CALC04: SLA A; A << 1
 4260 DJNZ CALC04
@@ -318,12 +318,12 @@
 4620 LD (POSX),A
 4630 CP D ; are we done?
 4640 RET Z ; yes, bail.
-4650 INC HL ; no increment HL
+4650 INC HL ; no, increment HL
 4660 LD A,(HL)
 4670 JP HLINE0 ; and loop
 4680 RET
 
-4690VLINE: CALL PSET
+4690VLINE: CALL PSET ; harder to optimize like HLINE
 4700 LD A,(ENDY)
 4710 LD D,A
 4720 LD A,(POSY)
