@@ -55,11 +55,11 @@
 520 CALL GTVRAM
 530 LD A,80
 540 LD (POSX),A
-550 LD A,28
+550 LD A,38
 560 LD (ENDY),A
-570MAIN02: LD A,10
+570MAIN02: LD A,0
 580 LD (POSY),A
-590 CALL VLINE ; [80-90],10 to [80-90],28
+590 CALL VLINE ; [80-90],0 to [80-90],38
 600 LD A,(POSX)
 610 INC A
 620 INC A ; +2 increment
@@ -323,7 +323,7 @@
 4670 JP HLINE0 ; and loop
 4680 RET
 
-4690VLINE: CALL CALCXY ; harder to optimize like HLINE
+4690VLINE: CALL CALCXY ; harder to optimize as HLINE
 4700VLINE0: OR B ; DIY. set to black
 4710 LD (HL),A
 4720 LD A,(ENDY)
@@ -331,18 +331,18 @@
 4740 LD A,(POSY)
 4750 INC A
 4760 LD (POSY),A
-4770 CP D
-4780 RET Z
-4790 LD A,B
+4770 CP D ; are we done?
+4780 RET Z ; yes, bail.
+4790 LD A,B ; No. Do we have to skip one line?
 4800 CP 128 ; Last bit in the column?
-4810 JP NZ,VLINE1
-4820 LD DE,144
+4810 JP NZ,VLINE1 ; Nah, just increase bit offset
+4820 LD DE,144 ; yeah, go one line (8 rows) down
 4830 ADD HL,DE
-4840 LD B,1
-4845 LD A,(HL)
+4840 LD B,1 ; reset bit offset
+4845 LD A,(HL) ; get the next value
 4850 JP VLINE0
-4860VLINE1: SLA B
-4865 LD A,(HL)
+4860VLINE1: SLA B ; increase bit offset
+4865 LD A,(HL) ; get the next value
 4870 JP VLINE0
 
 
