@@ -18,7 +18,7 @@ I don't want to overcrowd my code files with comments – space is at a premium 
 
 - **DSPDE EQU 0BFF1H**
 
- In the same vein, this one displays DE, and waits for a key to be pressed.
+ Display string of length B from address HL with x-y position in DE. If necessary, the string is wrapped at the end of the line and at the end of the display the LCD is scrolled up
 
 - **AOUT EQU 0BD09H**
 
