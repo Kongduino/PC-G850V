@@ -18,7 +18,7 @@ I don't want to overcrowd my code files with comments – space is at a premium 
 
 - **DSPDE EQU 0BFF1H**
 
- Display string of length B from address HL with x-y position in DE. If necessary, the string is wrapped at the end of the line and at the end of the display the LCD is scrolled up
+ Displays a string of length B from address HL with y-x position in DE. If necessary, the string is wrapped at the end of the line and at the end of the display the LCD is scrolled up
 
 - **AOUT EQU 0BD09H**
 
@@ -259,7 +259,7 @@ Previous models like the PC-1480U have physical Function Keys. Well then let's m
 
 ![FNKEYS](FNKEYS.jpg)
 
-I'll more UI elements as the need arise.
+I'll add more UI elements as the need arise.
 
 - **MATASANO**
 
@@ -270,7 +270,6 @@ Challenges 1-1 to 1-5 are done, with 1-6 on the way. For the latter, I need a co
 ![Hamming Distance](HammingDistance.jpg)
 
 The code for the Hamming Distance itself, `HAMDIS`, is 21 lines long: playing with bits is something that bare metal does well.
-
 
 ### functions
 
@@ -301,3 +300,50 @@ you have to be in and out as quickly as possible, and make NO CALLS to ROM routi
 
 
 ![demo](THISISATEST.gif)
+
+- **PSET / PSET VRAM**
+
+Drawing in ASM is a full-time job, and is complicated further by the fact that you can only draw one column (or more) of 8 pixels, starting at **character coordinates**, not pixel coordinates. That is, if you want to draw a pixel at 12:12, you have to draw at 2:1, with an x offset of 0 (columns 12-17 being character 3 horizontally), and a bit offset of 4 vertically. Nightmare. The `CALCXY` function does it all for you:
+
+```asm
+4000CALCXY: LD HL,VRAM0
+4010 LD A,(POSY)
+4020 SRL A
+4030 SRL A
+4040 SRL A ; Y / 8
+4050 OR A ; cp 0
+4060 JP Z,CALC00 ; already where we want to be
+4070 LD B,A
+4080 LD DE,144 ; add a line's worth
+4090CALC01: ADD HL,DE
+4100 DJNZ CALC01 ; loop
+4110CALC00: ; HL = beginning of line Y
+4120 LD A,(POSX) ; x
+4130 LD C,A
+4140 LD B,0
+4150 ADD HL,BC ; HL = exactly at pos x,y
+4160 LD A,(POSY) ; y
+4170 CALL DVD8 ; A = bit offset
+4180 LD (REMNY),A
+4190 OR A ; cp 0
+4200 JP NZ,CALC02 ; if A = 0,set to 1
+4210 LD A,1
+4220 JP CALC03
+4230CALC02: LD B,A ; else shift '1' left B times
+4240 LD A,1
+4250CALC04: SLA A; A << 1
+4260 DJNZ CALC04
+4270CALC03: LD B,A ; bit offset in B
+4280 LD A,(HL) ; 8 bits in A
+4290 RET ; Now do what you want with A (current bit pattern) and B (bit offset)
+
+4380PSET: CALL CALCXY
+4390 OR B ; set to black
+4400 LD (HL),A
+4440 RET
+```
+
+Which makes the `PSET` function very simple indeed, just an `OR B`. After that, it was easy-ish to add `HLINE` and `VLINE`. Meanwhile, `PLINE`, using Bresenham, doesn't work entirely, but is good enough for a demo.
+
+
+![demo](PSET_HLINE_VLINE.gif)
