@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>z80 disasm</title>
+    <script type="text/javascript" src="disasm.js"></script>
+    <style type="text/css">
+      #decoded {
+        font-family: Monaco, Courier;
+        font-size: 14px;
+      }
+      .L0x {
+        text-decoration: underline;
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+  <p>
+  Base Address: 0x<input id="BaseAddr" type="text" value="100" size="4"/>&nbsp;&nbsp;
+  <input type="button" id="reload" name="reload" value="reload" style="display:none;" onclick="javascript:disasm(lastBlob);"/>
+  </p>
+Click the button then choose a file to see its contents displayed below.
+<button onclick="openFile()">Open a file</button>
+<input id="inp" type='file' style="visibility:hidden;" onchange="readFile(event)" />
+<pre id="contents"></pre>
+<div id="decoded"></div>
+  </body>
+</html>
