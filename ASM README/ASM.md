@@ -271,6 +271,14 @@ Challenges 1-1 to 1-5 are done, with 1-6 on the way. For the latter, I need a co
 
 The code for the Hamming Distance itself, `HAMDIS`, is 21 lines long: playing with bits is something that bare metal does well.
 
+- **MEMMAP**
+
+This displays the memory map. I am planning to use this knowledge to write a file loader.
+
+![MemoryMap](MemoryMap.png)
+
+![MEMMAP](MEMMAP.gif)
+
 ### functions
 
 - `CLS`/`CLS0`
@@ -300,6 +308,11 @@ you have to be in and out as quickly as possible, and make NO CALLS to ROM routi
 
 
 ![demo](THISISATEST.gif)
+
+- **RAMDISK**
+
+Drawing
+
 
 - **PSET / PSET VRAM**
 
