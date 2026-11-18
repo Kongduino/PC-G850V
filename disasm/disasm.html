@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>z80 disasm</title>
+    <style type="text/css">
+      #decoded, #contents {
+        font-family: Courier, Monaco, fixed;
+        font-size: 14px;
+      }
+      #decoded a {
+        color: red;
+        font-weight: bold;
+      }
+      #decoded .lbl {
+        color: red;
+        font-weight: bold;
+      }
+      #decoded .equ {
+        color: blue;
+      }
+      #decoded .data {
+        color: grey;
+      }
+      #decoded .undoc {
+        color: darkorange;
+      }
+      #decoded :target {
+        background: yellow;
+      }
+      .demo-wrap {
+        float: right;
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+      .demo-bg {
+        float: right;
+        opacity: 0.5;
+        top: 0;
+        width: 346px;
+        height: 346px;
+      }
+      .demo-content {
+        position: relative;
+      }
+      #dataZonesList, #dataZonesInput, #exportBox {
+        padding: 2px;
+        margin-top: 5px;
+        margin-right: 5px;
+        float: left;
+        width: 300px;
+        height: 200px;
+        border: 1px grey dotted;
+      }
+      #Data_Areas {
+        width: 280px;
+      }
+    </style>
+    <script type="text/javascript" src="disasm.js"></script>
+  </head>
+  <body>
+    <div class="demo-wrap">
+      <img class="demo-bg" src="nounours.png" alt="" />
+      <div class="demo-content">
+        <h1>z80 disasm</h1>
+        <p>
+          Base Address: 0x<input id="BaseAddr" type="text" value="100" size="4" onchange="refresh()"/>
+          (set automatically for Intel HEX files)
+        </p>
+        <p>
+          <label><input id="Flow" type="checkbox" checked onchange="refresh()"/>
+          Follow code flow from the base address (unreached bytes are shown as data)</label>
+        </p>
+        <p>
+          Extra entry points: 0x<input id="Entries" type="text" value="" size="20" onchange="refresh()"/>
+          (hex, separated by spaces or commas)
+        </p>
+        <p>Open a raw binary (.bin) or an Intel HEX file (.hex).</p>
+        <button onclick="openFile()">Open a file</button>
+        <input id="inp" type="file" style="visibility:hidden;" onchange="readFile(event)" />
+        <div id="controls" style="display:none;">
+          <div id="dataZonesList">
+            <h4>Data Areas:</h4>
+            <select id="Data_Areas" name="Data_Areas" size="6"></select>
+            <br />
+            <button onclick="removeDataArea()">Remove selected</button>
+          </div>
+          <div id="dataZonesInput">
+            <h4>Add a data area:</h4>
+            <p>Start: 0x<input id="StartAddr" type="text" value="" size="4"/></p>
+            <p>End:&nbsp;&nbsp;0x<input id="EndAddr" type="text" value="" size="4"/></p>
+            <button onclick="addDataArea()">Add</button>
+          </div>
+          <div id="exportBox">
+            <h4>Export:</h4>
+            <p>G850 assembler source with line numbers, labels and EQUs, ending with Ctrl-Z.</p>
+            <button onclick="downloadASM()">Download .asm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br clear="both" />
+    <pre id="contents"></pre>
+    <pre id="decoded"></pre>
+  </body>
+</html>
